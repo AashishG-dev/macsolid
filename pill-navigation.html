@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floating Pill Navigation — Liquid Active Indicator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #FAFAFA;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(2, 132, 199, 0.04) 0px, transparent 50%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      color: #0F172A;
+      padding: 24px;
+    }
+
+    .demo-title {
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    /* ── Floating Pill Navigation Container ── */
+    .floating-pill-nav {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 9999px;
+      padding: 5px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.02),
+        0 20px 35px -10px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      user-select: none;
+      z-index: 10;
+    }
+
+    /* ── Liquid Sliding Bubble Indicator ── */
+    .nav-indicator-bubble {
+      position: absolute;
+      top: 5px;
+      left: 0;
+      height: calc(100% - 10px);
+      background: #FFFFFF;
+      border-radius: 9999px;
+      pointer-events: none;
+      box-shadow: 
+        0 2px 4px rgba(15, 23, 42, 0.04),
+        0 8px 16px -2px rgba(15, 23, 42, 0.08),
+        0 0 0 1px rgba(15, 23, 42, 0.04);
+      /* iOS / macOS Liquid Spring Curve */
+      transition: 
+        transform 0.4s cubic-bezier(0.25, 1, 0.35, 1),
+        width 0.35s cubic-bezier(0.25, 1, 0.35, 1),
+        opacity 0.25s ease;
+      opacity: 0;
+      z-index: 1;
+      will-change: transform, width;
+    }
+
+    /* ── Navigation List & Items ── */
+    .nav-items-list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 2px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.25s ease, transform 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      color: #0F172A;
+    }
+
+    .nav-btn:active {
+      transform: scale(0.96);
+    }
+
+    .nav-item.active .nav-btn {
+      color: #0F172A;
+      font-weight: 600;
+    }
+
+    /* ── SVG Icons ── */
+    .nav-icon {
+      width: 17px;
+      height: 17px;
+      stroke-width: 1.9;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.25s ease;
+    }
+
+    .nav-item.active .nav-icon {
+      stroke: #2563EB;
+      transform: scale(1.12);
+    }
+
+    .nav-item.active .nav-btn:hover .nav-icon {
+      transform: scale(1.18);
+    }
+
+    /* Subdued active dot (macOS touch) */
+    .active-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #2563EB;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-item.active .active-dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Info card beneath demo */
+    .demo-info {
+      margin-top: 36px;
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-title">macOS / iOS Liquid Sliding Active Indicator</div>
+
+  <!-- Floating Pill Navigation Component -->
+  <nav class="floating-pill-nav" id="floatingNav">
+    <!-- Liquid Sliding Bubble Highlight -->
+    <div class="nav-indicator-bubble" id="navIndicator"></div>
+
+    <ul class="nav-items-list" id="navList">
+      <!-- 1. Home -->
+      <li class="nav-item active">
+        <button class="nav-btn" data-target="home">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="nav-label">Home</span>
+          <span class="active-dot"></span>
+        </button>
+      </li>
+
+      <!-- 2. Explore -->
+      <li class="nav-item">
+        <button class="nav-btn" data-target="explore">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+          <span class="nav-label">Explore</span>
+          <span class="active-dot"></span>
+        </button>
+      </li>
+
+      <!-- 3. Flights -->
+      <li class="nav-item">
+        <button class="nav-btn" data-target="flights">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+          </svg>
+          <span class="nav-label">Flights</span>
+          <span class="active-dot"></span>
+        </button>
+      </li>
+
+      <!-- 4. Weather -->
+      <li class="nav-item">
+        <button class="nav-btn" data-target="weather">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          </svg>
+          <span class="nav-label">Weather</span>
+          <span class="active-dot"></span>
+        </button>
+      </li>
+
+      <!-- 5. Profile -->
+      <li class="nav-item">
+        <button class="nav-btn" data-target="profile">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span class="nav-label">Profile</span>
+          <span class="active-dot"></span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="demo-info">
+    Click or hover items to slide indicator • Spring easing curve
+  </div>
+
+  <script>
+    (function initFloatingPillNav() {
+      const navContainer = document.getElementById('floatingNav');
+      const indicator = document.getElementById('navIndicator');
+      const navItems = Array.from(document.querySelectorAll('.nav-item'));
+
+      let currentActiveItem = document.querySelector('.nav-item.active') || navItems[0];
+
+      // Reposition the sliding bubble relative to target item
+      function updateIndicator(targetItem, animate = true) {
+        if (!targetItem || !indicator || !navContainer) return;
+
+        const navRect = navContainer.getBoundingClientRect();
+        const targetRect = targetItem.getBoundingClientRect();
+
+        const offsetLeft = targetRect.left - navRect.left;
+        const width = targetRect.width;
+
+        if (!animate) {
+          const originalTransition = indicator.style.transition;
+          indicator.style.transition = 'none';
+          indicator.style.transform = `translateX(${offsetLeft}px)`;
+          indicator.style.width = `${width}px`;
+          indicator.style.opacity = '1';
+          // Force reflow
+          indicator.offsetHeight;
+          indicator.style.transition = originalTransition;
+        } else {
+          indicator.style.transform = `translateX(${offsetLeft}px)`;
+          indicator.style.width = `${width}px`;
+          indicator.style.opacity = '1';
+        }
+      }
+
+      // Initialize indicator position on load
+      requestAnimationFrame(() => {
+        updateIndicator(currentActiveItem, false);
+      });
+
+      // Handle Click & Selection
+      navItems.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          navItems.forEach((i) => i.classList.remove('active'));
+          item.classList.add('active');
+          currentActiveItem = item;
+          updateIndicator(item, true);
+        });
+
+        // Hover tracking preview
+        item.addEventListener('mouseenter', () => {
+          updateIndicator(item, true);
+        });
+      });
+
+      // Return indicator to active item on container mouse leave
+      navContainer.addEventListener('mouseleave', () => {
+        if (currentActiveItem) {
+          updateIndicator(currentActiveItem, true);
+        }
+      });
+
+      // Handle window resize dynamically
+      window.addEventListener('resize', () => {
+        if (currentActiveItem) {
+          updateIndicator(currentActiveItem, false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
