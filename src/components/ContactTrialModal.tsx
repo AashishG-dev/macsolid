@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Check, Mail, Calendar, Sparkles, Building2, User, Send } from 'lucide-react';
 
 interface ContactTrialModalProps {
@@ -10,7 +10,7 @@ interface ContactTrialModalProps {
 export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
   isOpen,
   onClose,
-  selectedEdition = 'MacSolid Pro (Full BOM Engine)',
+  selectedEdition = 'MacSolid Standard (Full BOM & Raw Stock Engine)',
 }) => {
   const [edition, setEdition] = useState(selectedEdition);
   const [submitted, setSubmitted] = useState(false);
@@ -23,20 +23,34 @@ export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
     notes: '',
   });
 
+  useEffect(() => {
+    if (selectedEdition) setEdition(selectedEdition);
+  }, [selectedEdition]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => {
-      // Auto close after 3.5 seconds
-      // setSubmitted(false);
-      // onClose();
-    }, 3500);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fadeIn">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fadeIn"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
       <div
         className="relative w-full max-w-lg bg-[#F5F3EF] rounded-4xl border border-[#151514]/[0.1] p-8 sm:p-10 shadow-[0_30px_70px_-15px_rgba(21,21,20,0.2)] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
@@ -80,7 +94,7 @@ export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
                 <Sparkles className="w-3 h-3 text-[#151514]" />
                 <span>EVALUATION & DISCOVERY</span>
               </div>
-              <h3 className="text-2xl font-bold tracking-tight text-[#151514] mb-1">
+              <h3 id="modal-title" className="text-2xl font-bold tracking-tight text-[#151514] mb-1">
                 Contact for Trial & Consultation
               </h3>
               <p className="text-xs text-[#686663] leading-relaxed">
@@ -96,30 +110,42 @@ export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
                 <label className="block text-[11px] font-mono font-medium text-[#151514] uppercase tracking-wider mb-1.5">
                   Edition of Interest
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
-                    onClick={() => setEdition('MacSolid Lite (Visual CAD Analysis)')}
-                    className={`py-2 px-3 rounded-xl border text-xs font-medium text-left transition-all cursor-pointer ${
+                    onClick={() => setEdition('MacSolid Lite (Visual CAD Analysis & Measurement)')}
+                    className={`py-2 px-2.5 rounded-xl border text-xs font-medium text-left transition-all cursor-pointer ${
                       edition.includes('Lite')
                         ? 'border-[#151514] bg-white text-[#151514] font-semibold shadow-xs'
                         : 'border-[#151514]/[0.1] bg-[#EBE9E5]/60 text-[#686663] hover:border-[#151514]/[0.2]'
                     }`}
                   >
-                    <div className="font-semibold text-[#151514]">MacSolid Lite</div>
-                    <div className="text-[10px] text-[#686663]">Visual analysis & views</div>
+                    <div className="font-semibold text-[#151514] text-[11px]">Lite</div>
+                    <div className="text-[9px] text-[#686663]">3D Studio & View</div>
                   </button>
                   <button
                     type="button"
-                    onClick={() => setEdition('MacSolid Pro (Full BOM Engine)')}
-                    className={`py-2 px-3 rounded-xl border text-xs font-medium text-left transition-all cursor-pointer ${
-                      edition.includes('Pro')
+                    onClick={() => setEdition('MacSolid Standard (Full BOM & Raw Stock Engine)')}
+                    className={`py-2 px-2.5 rounded-xl border text-xs font-medium text-left transition-all cursor-pointer ${
+                      edition.includes('Standard')
                         ? 'border-[#151514] bg-white text-[#151514] font-semibold shadow-xs'
                         : 'border-[#151514]/[0.1] bg-[#EBE9E5]/60 text-[#686663] hover:border-[#151514]/[0.2]'
                     }`}
                   >
-                    <div className="font-semibold text-[#151514]">MacSolid Pro</div>
-                    <div className="text-[10px] text-[#151514] font-medium">Full BOM generator</div>
+                    <div className="font-semibold text-[#151514] text-[11px]">Standard</div>
+                    <div className="text-[9px] text-[#151514] font-medium">Auto BOM Engine</div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEdition('MacSolid Professional (Custom Workflow Tailoring)')}
+                    className={`py-2 px-2.5 rounded-xl border text-xs font-medium text-left transition-all cursor-pointer ${
+                      edition.includes('Professional') || edition.includes('Pro')
+                        ? 'border-[#151514] bg-white text-[#151514] font-semibold shadow-xs'
+                        : 'border-[#151514]/[0.1] bg-[#EBE9E5]/60 text-[#686663] hover:border-[#151514]/[0.2]'
+                    }`}
+                  >
+                    <div className="font-semibold text-[#151514] text-[11px]">Professional</div>
+                    <div className="text-[9px] text-[#686663]">Custom Shop & ERP</div>
                   </button>
                 </div>
               </div>

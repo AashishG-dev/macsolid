@@ -1,0 +1,21 @@
+# Robots.txt for MacSolid Systems
+User-agent: *
+Allow: /
+
+# AI Citations & Search Engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+Sitemap: https://macsolid.pages.dev/sitemap.xml

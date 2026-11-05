@@ -43,3 +43,4 @@ npm run build
 - **Interactive 3D CAD Studio**: 6-DOF orbit viewport with live axis-aligned cross-section cut-planes.
 - **Automated BOM & Format Engine**: Feature breakdown and specifications for native multi-threaded STEP/IGES assembly parsing and ERP export.
 - **Curated Deployment Tiers**: Tailored edition matrix inspired by modern software licensing architectures.
+
