@@ -186,6 +186,23 @@ const NIMBUS_CSS = `
   cursor: pointer;
   transition: color 0.25s;
 }
+@media (max-width: 639px) {
+  .nimbus-item {
+    padding: 0 9px;
+    gap: 5px;
+    font-size: 11px;
+    height: 34px;
+  }
+}
+@media (max-width: 480px) {
+  .nimbus-item {
+    padding: 0 10px;
+    height: 34px;
+  }
+  .nimbus-item .nimbus-label {
+    display: none;
+  }
+}
 .nimbus-item:hover,
 .nimbus-item[aria-current="page"] {
   color: var(--n-fg);

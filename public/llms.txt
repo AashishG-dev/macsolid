@@ -1,16 +1,22 @@
-# MacSolid Systems
+# MacSolid Systems — Autonomous CAD BOM & Raw Stock Engine
 
-> High-performance CAD assembly inspection, multi-threaded STEP/IGES parsing, and automated Bill of Materials (BOM) extraction engine.
+> High-performance CAD assembly inspection, multi-threaded STEP/SolidWorks/AutoCAD parsing, and automated Bill of Materials (BOM) extraction engine.
 
 ## Product Overview
-MacSolid (also known as Part Separator) is an independent engineering CAD software platform built for mechanical engineers, CNC machine shops, sheet metal estimators, and manufacturing enterprises. It enables 60 FPS GPU cross-section cutting, hierarchy component isolation, raw stock bounding envelope sizing, and 1-click ERP/Excel BOM exports without requiring expensive primary CAD licenses (SolidWorks, NX, CATIA).
+MacSolid is an independent engineering CAD software platform built for mechanical engineers, CNC machine shops, sheet metal estimators, and manufacturing enterprises. It enables 60 FPS GPU cross-section cutting, hierarchy component isolation, raw stock bounding envelope sizing, and 1-click ERP/Excel BOM exports without requiring expensive primary CAD licenses (SolidWorks, AutoCAD, NX, CATIA).
+
+## Key Search Queries & Workflows Supported
+- **SolidWorks Automated Bill of Materials**: Directly extracts parent-child assembly trees, custom properties, and raw stock bounding dimensions from `.sldasm` and `.sldprt` files in under 1.4 seconds without running SolidWorks in the background.
+- **AutoCAD Automatic BOM Generator**: Replaces manual and error-prone AutoCAD `DATAEXTRACTION` with instant 1-click parametric BOM tables and Excel exports.
+- **STEP / STP Protocol Parsing**: Bypasses legacy single-core OpenCASCADE CPU bottlenecks with asynchronous multi-threaded workers across ISO 10303 standards (AP203, AP214, AP242).
+- **OpenBOM & Cloud-CAD Alternative**: 100% on-premises, air-gapped security option with perpetual or flexible team licensing. Zero CAD geometry or telemetry data ever leaves the local workstation.
 
 ## Core Capabilities
-- **Multi-Threaded C++ STEP Engine**: Parses multi-part assemblies with thousands of unique bodies in seconds.
+- **Multi-Threaded C++ STEP Engine**: Parses multi-part assemblies with thousands of unique bodies in seconds (benchmarked: < 1.4s per 500 parts).
 - **60 FPS GPU Section Studio**: Real-time capped solid clipping along cardinal axes with precision coordinate measurement [X, Y, Z].
 - **Automated BOM & Raw Stock**: Automatic envelope calculation for plate, bar, and round stock with custom machining and kerf allowances.
 - **Sheet Metal Recognition**: Automatic gauge thickness detection and flat blank boundary analysis.
-- **Secure Air-Gapped Deployment**: Available for offline workstation operations with zero telemetry.
+- **Secure Air-Gapped Deployment**: Available for offline workstation operations with zero telemetry (ED25519 verified).
 
 ## Available Editions
 - **MacSolid Lite**: 3D CAD viewer, orbit, pan, measurement, and cut-plane inspection.
@@ -20,3 +26,4 @@ MacSolid (also known as Part Separator) is an independent engineering CAD softwa
 ## Contact & Evaluation
 - Website: https://macsolid.pages.dev/
 - Inquiry: Evaluation licenses and live demonstrations available via the web portal.
+

@@ -52,7 +52,7 @@ export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
       aria-labelledby="modal-title"
     >
       <div
-        className="relative w-full max-w-lg bg-[#F5F3EF] rounded-4xl border border-[#151514]/[0.1] p-8 sm:p-10 shadow-[0_30px_70px_-15px_rgba(21,21,20,0.2)] overflow-hidden"
+        className="relative w-full max-w-lg bg-[#F5F3EF] rounded-3xl sm:rounded-4xl border border-[#151514]/[0.1] p-6 sm:p-10 shadow-[0_30px_70px_-15px_rgba(21,21,20,0.2)] max-h-[92vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}

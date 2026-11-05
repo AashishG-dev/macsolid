@@ -19,3 +19,4 @@ User-agent: Claude-SearchBot
 Allow: /
 
 Sitemap: https://macsolid.pages.dev/sitemap.xml
+

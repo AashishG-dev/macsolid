@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Check,
   X,
@@ -34,6 +34,13 @@ interface CoverflowPricingProps {
 
 export const CoverflowPricing: React.FC<CoverflowPricingProps> = ({ onOpenContactModal }) => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activeTooltip) return;
+    const handleOutsideClick = () => setActiveTooltip(null);
+    window.addEventListener('click', handleOutsideClick);
+    return () => window.removeEventListener('click', handleOutsideClick);
+  }, [activeTooltip]);
 
   const tiers: PricingTier[] = [
     {
@@ -178,23 +185,23 @@ export const CoverflowPricing: React.FC<CoverflowPricingProps> = ({ onOpenContac
   return (
     <section
       id="pricing"
-      className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-[1340px] mx-auto z-10"
+      className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-[1340px] mx-auto z-10 overflow-hidden"
     >
       {/* Editorial Section Header */}
-      <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-14">
+      <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-14">
         <span className="font-mono text-[11px] uppercase tracking-widest text-[#151514] mb-3 font-semibold opacity-60">
           — EDITIONS & DEPLOYMENT
         </span>
-        <h2 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-4">
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tightest text-[#151514] mb-3 sm:mb-4">
           Tailored to Your <span className="font-serif italic font-normal">Workflow.</span>
         </h2>
-        <p className="text-base sm:text-lg text-[#686663] max-w-xl leading-relaxed">
+        <p className="text-sm sm:text-base lg:text-lg text-[#686663] max-w-xl leading-relaxed">
           Predictable engineering licenses designed for individual estimators, machine shops, and multi-facility manufacturing enterprises.
         </p>
       </div>
 
       {/* Main Sketch-style Aura Backdrop Container */}
-      <div className="relative rounded-[32px] sm:rounded-[40px] p-4 sm:p-7 lg:p-10 bg-gradient-to-br from-[#FFF5EA]/75 via-[#FFFFFF]/85 to-[#F4ECFD]/65 border border-[#151514]/[0.08] shadow-[0_24px_70px_-20px_rgba(21,21,20,0.08)] backdrop-blur-md">
+      <div className="relative rounded-[28px] sm:rounded-[40px] p-4 sm:p-7 lg:p-10 bg-gradient-to-br from-[#FFF5EA]/75 via-[#FFFFFF]/85 to-[#F4ECFD]/65 border border-[#151514]/[0.08] shadow-[0_24px_70px_-20px_rgba(21,21,20,0.08)] backdrop-blur-md overflow-hidden">
         
         {/* Responsive 3-Column Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
@@ -282,11 +289,12 @@ export const CoverflowPricing: React.FC<CoverflowPricingProps> = ({ onOpenContac
                           <div className="relative inline-flex items-center ml-auto pl-1">
                             <button
                               type="button"
-                              onClick={() =>
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 setActiveTooltip(
                                   activeTooltip === `${tier.id}-${i}` ? null : `${tier.id}-${i}`
-                                )
-                              }
+                                );
+                              }}
                               onMouseEnter={() => setActiveTooltip(`${tier.id}-${i}`)}
                               onMouseLeave={() => setActiveTooltip(null)}
                               className="text-[#8C8A85] hover:text-[#151514] transition-colors p-0.5 cursor-pointer"

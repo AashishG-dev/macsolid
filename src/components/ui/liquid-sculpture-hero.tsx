@@ -556,10 +556,13 @@ class LiquidEngine {
     if (!gl) throw new Error("WebGL2 unavailable")  
     this.gl = gl  
     const nav = navigator as Navigator & { deviceMemory?: number }  
+    const isMobileViewport = typeof window !== "undefined" && window.innerWidth < 768
+    const isTouchDevice = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
     this.lowPower =  
       (nav.hardwareConcurrency || 8) <= 4 ||  
       (nav.deviceMemory || 8) <= 4 ||  
-      window.matchMedia("(pointer: coarse)").matches  
+      isTouchDevice ||  
+      isMobileViewport  
     this.initGL()  
     canvas.addEventListener("webglcontextlost", this.onLost, false)  
   }
@@ -676,7 +679,8 @@ class LiquidEngine {
 
   private buildParticles(img: HTMLImageElement) {  
     const gl = this.gl  
-    const baseGrid = this.lowPower ? 640 : 1000  
+    // Adaptive particle grid: 28k-32k particles on mobile/touch, 85k on high-end desktop
+    const baseGrid = this.lowPower ? 420 : 850  
     const gw = Math.round(baseGrid * Math.sqrt(clamp(this.opts.density, 0.15, 2)))  
     const gh = Math.max(1, Math.round(gw / this.aspect))  
     this.gridW = gw  
@@ -803,9 +807,9 @@ class LiquidEngine {
     this.cssW = Math.max(1, cssW)  
     this.cssH = Math.max(1, cssH)  
     this.rect = rect  
-    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.5 : 2)  
+    let dpr = Math.min(window.devicePixelRatio || 1, this.lowPower ? 1.25 : 1.75)  
     const px = this.cssW * this.cssH * dpr * dpr  
-    if (px > 4.5e6) dpr = Math.max(1, Math.sqrt(4.5e6 / (this.cssW * this.cssH)))  
+    if (px > 3.0e6) dpr = Math.max(1, Math.sqrt(3.0e6 / (this.cssW * this.cssH)))  
     const w = Math.round(this.cssW * dpr)  
     const h = Math.round(this.cssH * dpr)  
     if (this.canvas.width !== w || this.canvas.height !== h) {  
@@ -1218,27 +1222,41 @@ function computeRect(
   band: { top: number; bottom: number },  
   p: { scale: number; mobileScale: number; x: number; y: number }  
 ): Rect {  
-  const bandH = Math.max(80, band.bottom - band.top)  
   let rw: number  
   let maxH: number  
+
   if (w >= 1024) {  
-    rw = w * 1.05 * p.scale  
-    maxH = Math.max(bandH * 1.15 * p.scale, 480 * p.scale)  
+    const bandH = Math.max(80, band.bottom - band.top)  
+    maxH = Math.min(h * 0.70, Math.max(bandH * 1.05 * p.scale, 440 * p.scale))  
+    rw = Math.min(w * 0.98 * p.scale, maxH * aspect)  
+    if (rw / aspect > maxH) rw = maxH * aspect  
+    const rh = rw / aspect  
+    const cx = w * (0.5 + p.x / 100)  
+    const cy = (band.top + band.bottom) / 2 + h * (p.y / 100)  
+    return { x: cx - rw / 2, y: cy - rh / 2, w: rw, h: rh }  
   } else if (w >= 640) {  
-    rw = w * 1.3 * p.scale  
-    maxH = Math.max(bandH * 1.2 * p.scale, 420 * p.scale)  
-  } else if (aspect < 1.3) {  
-    rw = w * 1.0 * p.mobileScale  
-    maxH = Math.max(bandH * 1.0 * p.mobileScale, 360 * p.mobileScale)  
+    const bandH = Math.max(80, band.bottom - band.top)  
+    maxH = Math.min(h * 0.65, Math.max(bandH * 1.15 * p.scale, 380 * p.scale))  
+    rw = Math.min(w * 1.25 * p.scale, maxH * aspect)  
+    if (rw / aspect > maxH) rw = maxH * aspect  
+    const rh = rw / aspect  
+    const cx = w * (0.5 + p.x / 100)  
+    const cy = (band.top + band.bottom) / 2 + h * (p.y / 100)  
+    return { x: cx - rw / 2, y: cy - rh / 2, w: rw, h: rh }  
   } else {  
-    rw = w * 1.9 * p.mobileScale  
-    maxH = Math.max(bandH * 1.2 * p.mobileScale, 360 * p.mobileScale)  
+    // MOBILE (< 640px): Zoom the sculpture so the core knot and fine sand grain details are clearly visible
+    // Scaling width to ~1.48w gives the central knot the ideal vertical presence (~230px) in the upper half
+    rw = w * 1.48 * p.mobileScale;  
+    const rh = rw / aspect;  
+    const cx = w * (0.5 + p.x / 100);  
+    
+    // Position centrally in the upper space above the hero text (below navbar ~75px, above content)
+    const contentTop = band.bottom > 200 ? band.bottom : h * 0.54;  
+    const headerBottom = 75;  
+    const cy = (headerBottom + contentTop) * 0.5 + h * (p.y / 100);  
+    
+    return { x: cx - rw / 2, y: cy - rh / 2, w: rw, h: rh };  
   }  
-  if (rw / aspect > maxH) rw = maxH * aspect  
-  const rh = rw / aspect  
-  const cx = w * (0.5 + p.x / 100)  
-  const cy = (band.top + band.bottom) / 2 + h * (p.y / 100)  
-  return { x: cx - rw / 2, y: cy - rh / 2, w: rw, h: rh }  
 }
 
 /* ────────────────────────────────────────────────────────────────────  
@@ -1251,13 +1269,13 @@ const CSS = `
   touch-action:pan-y;display:flex;flex-direction:column;box-sizing:border-box}  
 .sh-root *,.sh-root *::before,.sh-root *::after{box-sizing:border-box}  
 .sh-stage{position:absolute;inset:0;z-index:0;pointer-events:none}  
-.sh-canvas{position:fixed;inset:0;width:100vw;height:100vh;display:block;opacity:1;pointer-events:none;z-index:1}  
+.sh-canvas{position:fixed;inset:0;width:100%;height:100%;display:block;opacity:1;pointer-events:none;z-index:1}  
 .sh-fallback{position:absolute;display:block;max-width:none;user-select:none;-webkit-user-drag:none;opacity:0;pointer-events:none}  
 .sh-backdrop{position:absolute;left:50%;z-index:0;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;user-select:none;  
   font-family:var(--sh-head);font-weight:600;letter-spacing:-.06em;line-height:.8;color:color-mix(in srgb,var(--sh-fg) 5%,transparent)}  
 .sh-spacer{flex:1 1 auto;min-height:0}  
 .sh-content{position:relative;z-index:20;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);align-items:end;  
-  gap:clamp(24px,4cqw,72px);padding:0 clamp(20px,3.2cqw,48px) clamp(28px,3.4cqw,52px)}  
+  gap:clamp(24px,4cqw,72px);padding:0 clamp(20px,3.2cqw,48px) clamp(28px,3.4cqw,52px);max-width:100%;box-sizing:border-box}  
 .sh-eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.62;margin:0 0 clamp(14px,1.6cqw,22px);  
   display:flex;align-items:center;gap:12px}  
 .sh-eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}  
@@ -1276,18 +1294,19 @@ const CSS = `
 .sh-txt{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-size:14.5px;font-weight:500;  
   letter-spacing:-.01em;padding:4px 0;border-bottom:1px solid color-mix(in srgb,var(--sh-fg) 30%,transparent)}  
 .sh-root a:focus-visible{outline:2px solid var(--sh-fg);outline-offset:4px}  
-@container (max-width:1023px){  
-  .sh-content{grid-template-columns:1fr;gap:28px}  
-  .sh-aside{justify-self:start;max-width:520px;padding-bottom:0}  
-  .sh-h1{font-size:clamp(40px,min(9.5cqw,9cqh),96px)}  
+@media (max-width:1023px), @container (max-width:1023px){  
+  .sh-content{grid-template-columns:1fr;gap:24px}  
+  .sh-aside{justify-self:start;max-width:540px;padding-bottom:0}  
+  .sh-h1{font-size:clamp(38px,min(9.5vw,9vh),96px)}  
 }  
-@container (max-width:639px){  
-  .sh-h1{font-size:clamp(36px,min(12.5cqw,7.2cqh),60px);line-height:.94}  
-  .sh-body{font-size:15px;margin-bottom:20px}  
-  .sh-eyebrow{font-size:11px}  
-  .sh-ctas{gap:18px}  
-  .sh-btn{height:48px}  
-  .sh-content{padding-bottom:40px}  
+@media (max-width:639px), @container (max-width:639px){  
+  .sh-content{grid-template-columns:1fr;gap:16px;padding:0 20px 32px}  
+  .sh-h1{font-size:clamp(32px, 8.5vw, 48px);line-height:1.02}  
+  .sh-body{font-size:14px;line-height:1.45;margin-bottom:18px}  
+  .sh-eyebrow{font-size:10.5px;margin-bottom:10px}  
+  .sh-ctas{gap:14px}  
+  .sh-btn{height:44px;padding:0 18px;font-size:13.5px}  
+  .sh-txt{font-size:13.5px}
 }  
 @media (prefers-reduced-motion:reduce){  
   .sh-btn,.sh-btn svg,.sh-txt svg{transition:none}  
@@ -1451,18 +1470,18 @@ export default function SculptureHero(props: SculptureHeroProps) {
         bottom: h,
       }
     } else {
+      const cTop = content && content.offsetTop > 180 ? content.offsetTop : mob ? h * 0.54 : h * 0.78;
       band = {  
         top: 24,  
-        bottom: content ? content.offsetTop - 8 : h * 0.78,  
-      }  
-      if (mob && aspectRef.current < 1.3 && content) band.bottom += content.offsetHeight * 0.3  
+        bottom: cTop - 8,  
+      };  
     }
     const rect = computeRect(w, h, aspectRef.current, band, layout.current)  
     const bd = backdropRef.current  
     if (bd) {  
       const chars = Math.max(1, (bd.textContent || "").length)  
       bd.style.fontSize = Math.min((band.bottom - band.top) * 0.95, (w * 0.92) / (chars * 0.56)) + "px"  
-      bd.style.top = (band.top + band.bottom) / 2 + "px"  
+      bd.style.top = (mob ? rect.y + rect.h / 2 : (band.top + band.bottom) / 2) + "px"  
     }  
     engineRef.current?.resize(w, h, rect)  
   }, [behindText])

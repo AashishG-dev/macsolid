@@ -9,19 +9,56 @@ import { HeroSection } from './components/HeroSection';
 import { InteractiveCADStudio } from './components/InteractiveCADStudio';
 import { AnimatedFormatStack } from './components/AnimatedFormatStack';
 import { CoverflowPricing } from './components/CoverflowPricing';
+import { EngineeringFAQ } from './components/EngineeringFAQ';
 import { ContactTrialModal } from './components/ContactTrialModal';
 import { Footer } from './components/Footer';
+
+// Programmatic SEO Routes
+import { SolidWorksBOMPage } from './routes/SolidWorksBOMPage';
+import { AutoCADBOMPage } from './routes/AutoCADBOMPage';
+import { StepBOMPage } from './routes/StepBOMPage';
+import { OpenBOMAlternativePage } from './routes/OpenBOMAlternativePage';
+import { ROICalculatorPage } from './routes/ROICalculatorPage';
+import { SecurityCompliancePage } from './routes/SecurityCompliancePage';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function App() {
+  const [currentPath, setCurrentPath] = useState(() => {
+    return typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') || '/' : '/';
+  });
+
   const lenisRef = useRef<Lenis | null>(null);
   const [activeStage, setActiveStage] = useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [selectedEdition, setSelectedEdition] = useState('MacSolid Pro (Full BOM Engine)');
   const isNavigatingRef = useRef(false);
 
+  // Client-side router history navigation
   useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.replace(/\/$/, '') || '/';
+      setCurrentPath(path);
+      window.scrollTo(0, 0);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    const cleanPath = path.replace(/\/$/, '') || '/';
+    window.history.pushState({}, '', cleanPath);
+    setCurrentPath(cleanPath);
+    window.scrollTo(0, 0);
+  };
+
+  // Lenis & ScrollTrigger effect — only active when on the homepage '/'
+  useEffect(() => {
+    if (currentPath !== '/') {
+      return;
+    }
+
     // 1. Initialize Lenis Smooth Scroll
     const lenis = new Lenis({
       duration: 1.2,
@@ -30,7 +67,7 @@ export function App() {
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.8,
+      touchMultiplier: 1.1,
       infinite: false,
     });
     lenisRef.current = lenis;
@@ -83,7 +120,7 @@ export function App() {
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();
     };
-  }, []);
+  }, [currentPath]);
 
   const handleNavigateStage = (stageIndex: number) => {
     setActiveStage(stageIndex);
@@ -116,6 +153,115 @@ export function App() {
     setIsContactModalOpen(true);
   };
 
+  // Route: SolidWorks BOM Automation
+  if (currentPath === '/solidworks-bom-generator') {
+    return (
+      <>
+        <SolidWorksBOMPage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
+  // Route: AutoCAD BOM Automation
+  if (currentPath === '/autocad-bom-generator') {
+    return (
+      <>
+        <AutoCADBOMPage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
+  // Route: STEP / STP AP203/214/242 Parser
+  if (currentPath === '/step-bom-extractor') {
+    return (
+      <>
+        <StepBOMPage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
+  // Route: OpenBOM Alternative Comparison
+  if (currentPath === '/openbom-alternative') {
+    return (
+      <>
+        <OpenBOMAlternativePage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
+  // Route: BOM ROI Calculator
+  if (currentPath === '/roi-calculator') {
+    return (
+      <>
+        <ROICalculatorPage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
+  // Route: Security & ITAR Compliance
+  if (currentPath === '/security') {
+    return (
+      <>
+        <SecurityCompliancePage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
+  // Default: Homepage Overview
   return (
     <div className="relative min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5] font-sans antialiased">
       {/* Precision Dotted Engineering Grid Background */}
@@ -128,19 +274,20 @@ export function App() {
         onOpenContactModal={() => handleOpenContactModal('MacSolid Pro (Full BOM Engine)')}
       />
 
-      {/* Main Flow: 4 Unified, Spacious Chapters */}
+      {/* Main Flow: 4 Unified, Spacious Chapters + Engineering FAQ */}
       <main className="relative z-10">
         <HeroSection
           onExploreClick={handleHeroExplore}
           onOpenContactModal={() => handleOpenContactModal('MacSolid Pro (Full BOM Engine)')}
         />
         <InteractiveCADStudio />
-        <AnimatedFormatStack />
+        <AnimatedFormatStack onNavigate={navigateTo} />
         <CoverflowPricing onOpenContactModal={handleOpenContactModal} />
+        <EngineeringFAQ />
       </main>
 
-      {/* Minimalist Ink Footer */}
-      <Footer />
+      {/* Minimalist Ink Footer with Categorized Topic Silos */}
+      <Footer onNavigate={navigateTo} />
 
       {/* Contact for Trial & Schedule Meeting Modal */}
       <ContactTrialModal

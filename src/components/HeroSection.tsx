@@ -77,6 +77,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         hint=""
         hintTouch=""
         sculptureScale={1.04}
+        mobileSculptureScale={1.12}
         particleDensity={1.05}
         dotSize={1.0}
         turbulence={1.0}

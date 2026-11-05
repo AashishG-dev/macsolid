@@ -52,28 +52,38 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-    // 1. Scene & Camera Setup
+    // 1. Scene & Adaptive Camera Setup
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
-    if (modelType === 'mould_assembly') {
-      camera.position.set(240, 200, 280);
-    } else if (modelType === 'hydraulic_manifold') {
-      camera.position.set(200, 160, 240);
-    } else {
-      camera.position.set(210, 170, 250);
-    }
-    camera.lookAt(0, 0, 0);
 
-    // 2. High-Performance WebGL Renderer
+    const alignCamera = (cam: THREE.PerspectiveCamera, w: number, h: number) => {
+      const asp = Math.max(0.1, w / h);
+      // On narrow/mobile screens (asp < 1.15), pull camera back proportionally so model is never clipped
+      const distFactor = asp < 0.75 ? 1.55 : asp < 1.0 ? 1.35 : asp < 1.25 ? 1.18 : 1.0;
+
+      if (modelType === 'mould_assembly') {
+        cam.position.set(240 * distFactor, 200 * distFactor, 280 * distFactor);
+      } else if (modelType === 'hydraulic_manifold') {
+        cam.position.set(200 * distFactor, 160 * distFactor, 240 * distFactor);
+      } else {
+        cam.position.set(210 * distFactor, 170 * distFactor, 250 * distFactor);
+      }
+      cam.lookAt(0, 0, 0);
+    };
+
+    alignCamera(camera, width, height);
+
+    // 2. High-Performance WebGL Renderer (DPR capped for mobile battery & thermal efficiency)
+    const isMobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !isMobile,
       alpha: true,
       powerPreference: 'high-performance',
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.75));
     renderer.localClippingEnabled = true;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -587,20 +597,26 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
       ];
     }
 
-    // 7. Mouse Orbit Interaction
+    // 7. Unified Pointer & Touch Orbit Interaction
+    container.style.touchAction = 'pan-y'; // Allows vertical page scrolling while horizontal swipe orbits the 3D model
     let isDragging = false;
-    let prevMousePos = { x: 0, y: 0 };
+    let prevPointerPos = { x: 0, y: 0 };
     const rotationSpeed = 0.0035;
     let targetRotationY = 0.45;
     let targetRotationX = 0.22;
 
-    const onMouseDown = (e: MouseEvent) => {
+    const onPointerDown = (e: PointerEvent) => {
       if (!interactive) return;
       isDragging = true;
-      prevMousePos = { x: e.clientX, y: e.clientY };
+      prevPointerPos = { x: e.clientX, y: e.clientY };
+      try {
+        container.setPointerCapture(e.pointerId);
+      } catch {
+        // Fallback
+      }
     };
 
-    const onMouseMove = (e: MouseEvent) => {
+    const onPointerMove = (e: PointerEvent) => {
       const rect = container.getBoundingClientRect();
       const relX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const relY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
@@ -612,29 +628,39 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
       });
 
       if (!isDragging || !interactive) return;
-      const deltaX = e.clientX - prevMousePos.x;
-      const deltaY = e.clientY - prevMousePos.y;
+      const deltaX = e.clientX - prevPointerPos.x;
+      const deltaY = e.clientY - prevPointerPos.y;
 
       targetRotationY += deltaX * rotationSpeed;
       targetRotationX += deltaY * rotationSpeed;
       targetRotationX = Math.max(-0.85, Math.min(0.85, targetRotationX));
 
-      prevMousePos = { x: e.clientX, y: e.clientY };
+      prevPointerPos = { x: e.clientX, y: e.clientY };
     };
 
-    const onMouseUp = () => {
+    const onPointerUp = (e: PointerEvent) => {
       isDragging = false;
+      try {
+        if (container.hasPointerCapture(e.pointerId)) {
+          container.releasePointerCapture(e.pointerId);
+        }
+      } catch {
+        // Fallback
+      }
     };
 
-    container.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    container.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
 
-    // 8. Render Loop with Synchronized Local-Space Section Plane
-    let animId: number;
+    // 8. Viewport Visibility Culling (Stops RAF when scrolled out of view to save 100% GPU/CPU on mobile)
+    let animId: number = 0;
+    let isRunning = false;
     const clock = new THREE.Clock();
 
     const animate = () => {
+      if (!isRunning) return;
       const delta = clock.getDelta();
 
       if (!isDragging) {
@@ -663,25 +689,53 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
       animId = requestAnimationFrame(animate);
     };
 
-    animate();
+    const startLoop = () => {
+      if (isRunning) return;
+      isRunning = true;
+      clock.start();
+      animId = requestAnimationFrame(animate);
+    };
 
-    const onResize = () => {
+    const stopLoop = () => {
+      isRunning = false;
+      cancelAnimationFrame(animId);
+    };
+
+    // Pause Three.js completely when out of viewport
+    const io = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(container);
+
+    // Responsive Container Observer for dynamic framing on mobile / orientation changes
+    const ro = new ResizeObserver(() => {
       if (!container || !rendererRef.current) return;
       const w = container.clientWidth;
       const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
       camera.aspect = w / h;
+      alignCamera(camera, w, h);
       camera.updateProjectionMatrix();
       rendererRef.current.setSize(w, h);
-    };
-
-    window.addEventListener('resize', onResize);
+    });
+    ro.observe(container);
 
     return () => {
-      cancelAnimationFrame(animId);
-      container.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-      window.removeEventListener('resize', onResize);
+      stopLoop();
+      io.disconnect();
+      ro.disconnect();
+      container.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
       renderer.dispose();
     };
   }, [modelType]);

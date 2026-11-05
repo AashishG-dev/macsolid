@@ -72,6 +72,44 @@
             "publisher": {
               "@id": "https://macsolid.pages.dev/#organization"
             }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://macsolid.pages.dev/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does MacSolid automatically generate a Bill of Materials (BOM) from SolidWorks files?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "MacSolid directly parses native SolidWorks assemblies (.sldasm) and parts (.sldprt) via a multi-threaded C++ engine. It extracts component hierarchies, suppressed states, custom properties, and calculates exact raw stock bounding dimensions in under 1.4 seconds without running SolidWorks in the background."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can MacSolid extract a Bill of Materials from AutoCAD or neutral STEP files?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. MacSolid replaces manual AutoCAD DATAEXTRACTION commands with instant 1-click BOM tree generation from DWG, DXF, and ISO 10303 STEP standards (AP203, AP214, AP242), automatically exporting to formatted Excel (.xlsx) and ERP schemas."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does MacSolid compare to cloud-based tools like OpenBOM?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Unlike OpenBOM, which requires uploading proprietary CAD data to third-party cloud servers, MacSolid operates 100% locally on your Windows workstation. It offers true air-gapped on-premises security, zero data telemetry, 60 FPS GPU cross-section inspection, and no recurring cloud subscription fees."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does MacSolid calculate raw stock sizing and sheet metal gauge thickness?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. MacSolid automatically calculates PCA principal axes bounding envelopes for plate, block, and round stock with custom machining kerf margins, and accurately detects uniform sheet metal gauge thickness and flat blank dimensions."
+                }
+              }
+            ]
           }
         ]
       }

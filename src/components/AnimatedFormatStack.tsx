@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -16,13 +16,41 @@ interface FormatItem {
   extensions: string[];
   specs: { label: string; value: string }[];
   accentColor: string;
+  href?: string;
+  ctaText?: string;
 }
 
-export const AnimatedFormatStack: React.FC = () => {
+interface AnimatedFormatStackProps {
+  onNavigate?: (path: string) => void;
+}
+
+export const AnimatedFormatStack: React.FC<AnimatedFormatStackProps> = ({ onNavigate }) => {
   const [active, setActive] = useState(0);
   const [cardProgress, setCardProgress] = useState(0); // Fractional card index for smooth sizing
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   const formats: FormatItem[] = [
     {
@@ -41,6 +69,8 @@ export const AnimatedFormatStack: React.FC = () => {
         { label: 'Accuracy', value: 'Exact Tolerances' },
       ],
       accentColor: '#1A73E8',
+      href: '/solidworks-bom-generator',
+      ctaText: 'Explore SolidWorks Automated BOM Engine',
     },
     {
       id: 'step',
@@ -58,6 +88,8 @@ export const AnimatedFormatStack: React.FC = () => {
         { label: 'Topology', value: 'B-Rep Auto-Stitch' },
       ],
       accentColor: '#0070F3',
+      href: '/step-bom-extractor',
+      ctaText: 'Explore ISO STEP AP203/214/242 Engine',
     },
     {
       id: 'nx',
@@ -160,7 +192,7 @@ export const AnimatedFormatStack: React.FC = () => {
   const activeFormat = formats[active];
 
   return (
-    <section ref={sectionRef} id="formats" className="relative py-28 px-6 max-w-7xl mx-auto z-10">
+    <section ref={sectionRef} id="formats" className="relative py-20 sm:py-28 px-4 sm:px-6 max-w-7xl mx-auto z-10 overflow-hidden">
       {/* Antigravity Minimalist Section Title */}
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12">
         <span className="font-mono text-xs uppercase tracking-widest text-[#151514] mb-3 font-semibold opacity-60">
@@ -174,7 +206,7 @@ export const AnimatedFormatStack: React.FC = () => {
         </p>
 
         {/* Quick Format Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-full border border-[#151514]/[0.08] bg-[#F5F3EF]/90 backdrop-blur-md shadow-xs mb-6">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full border border-[#151514]/[0.08] bg-[#F5F3EF]/90 backdrop-blur-md shadow-xs mb-6 max-w-full">
           {formats.map((f, i) => (
             <button
               key={f.id}
@@ -213,11 +245,15 @@ export const AnimatedFormatStack: React.FC = () => {
       </div>
 
       {/* 3D Stack Deck Grid */}
-      <div className="rounded-4xl border border-[#151514]/[0.08] bg-[#F5F3EF]/70 backdrop-blur-md p-8 sm:p-12 shadow-[0_20px_50px_-15px_rgba(21,21,20,0.06)]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div className="rounded-3xl sm:rounded-4xl border border-[#151514]/[0.08] bg-[#F5F3EF]/70 backdrop-blur-md p-5 sm:p-8 md:p-12 shadow-[0_20px_50px_-15px_rgba(21,21,20,0.06)] overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           {/* Left Column: 3D Stack that reveals one-by-one ONCE on first visit */}
-          <div className="lg:col-span-5 relative flex items-center justify-center py-6 min-h-[380px]">
-            <div className="relative w-full max-w-[320px] h-[360px] perspective-[1200px]">
+          <div className="lg:col-span-5 relative flex items-center justify-center py-4 sm:py-6 min-h-[380px]">
+            <div
+              className="relative w-full max-w-[280px] sm:max-w-[320px] h-[360px] perspective-[1200px] touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               {formats.map((item, idx) => {
                 const diff = idx - cardProgress;
                 const isCurrent = active === idx;
@@ -345,6 +381,25 @@ export const AnimatedFormatStack: React.FC = () => {
                 </div>
               ))}
             </div>
+
+            {/* Deep-Dive Route Link */}
+            {activeFormat.href && activeFormat.ctaText && (
+              <div className="pt-6">
+                <a
+                  href={activeFormat.href}
+                  onClick={(e) => {
+                    if (onNavigate && activeFormat.href) {
+                      e.preventDefault();
+                      onNavigate(activeFormat.href);
+                    }
+                  }}
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-full bg-[#151514] text-[#EBE9E5] hover:bg-[#282826] transition-all cursor-pointer shadow-xs group"
+                >
+                  <span>{activeFormat.ctaText}</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
