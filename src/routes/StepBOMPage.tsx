@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Check, Layers, Cpu, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
-import { ROICalculator } from '../components/ROICalculator';
 
 interface PageProps {
   onBack: () => void;
@@ -117,9 +116,53 @@ export const StepBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal })
         </div>
       </section>
 
-      {/* ROI Section */}
-      <section className="px-6 mb-24">
-        <ROICalculator onOpenContactModal={() => onOpenContactModal('MacSolid Standard')} />
+      {/* Advanced Engineering Showcase */}
+      <section className="px-6 mb-24 max-w-6xl mx-auto">
+        <div className="border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
+          <div className="max-w-2xl mb-8">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
+              HIGH-THROUGHPUT ASSEMBLY PARSING
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mt-2 mb-2">
+              Automated STEP Decomposition &amp; Raw Stock Sizing
+            </h2>
+            <p className="text-xs sm:text-sm text-[#686663] leading-relaxed">
+              Designed specifically for manufacturing plants receiving complex multi-gigabyte client assemblies in STEP AP203/214/242.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+                <Cpu className="w-4 h-4 text-blue-600" />
+                <span>MULTI-PROCESS WORKER POOL</span>
+              </div>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Utilizes dedicated C++ worker processes to import and isolate bodies in parallel, bypassing single-core bottlenecks.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-600" />
+                <span>PCA MINIMUM BOUNDING BOX</span>
+              </div>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Computes tightest physical billet, block, or round bar stock dimensions for each individual body without excess waste.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>SURFACE HEALING &amp; B-REP STITCH</span>
+              </div>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Automatically repairs degenerate faces, closes non-manifold gaps, and ensures watertight solid bodies for export.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}

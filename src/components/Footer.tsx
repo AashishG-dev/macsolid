@@ -105,11 +105,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <a
-                  href="/roi-calculator"
-                  onClick={(e) => handleLinkClick(e, '/roi-calculator')}
+                  href="/step-bom-extractor"
+                  onClick={(e) => handleLinkClick(e, '/step-bom-extractor')}
                   className="text-[#686663] hover:text-[#151514] transition-colors"
                 >
-                  BOM Labor ROI Calculator
+                  Raw Stock &amp; PCA Bounding Engine
                 </a>
               </li>
               <li>

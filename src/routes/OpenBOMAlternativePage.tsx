@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Check, X, ShieldCheck, Zap, HardDrive, DollarSign, Lock, ArrowRight, Activity, Cpu } from 'lucide-react';
-import { ROICalculator } from '../components/ROICalculator';
 
 interface PageProps {
   onBack: () => void;
@@ -232,21 +231,51 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
         </p>
       </section>
 
-      {/* ROI Calculator Section */}
+      {/* Engineering Technical Advantage Showcase */}
       <section className="py-16 px-6 max-w-6xl mx-auto border-t border-[#151514]/[0.08]">
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 max-w-2xl mx-auto">
           <span className="text-xs font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
-            COST COMPARISON ESTIMATOR
+            ARCHITECTURE ADVANTAGE
           </span>
-          <h2 className="text-3xl font-bold tracking-tight text-[#151514] mt-2">
-            Calculate Your Savings vs. Cloud SaaS
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
+            Local C++ Performance vs. Cloud SaaS Latency
           </h2>
-          <p className="text-sm text-[#686663] mt-2 max-w-lg mx-auto">
-            Discover how much your engineering department saves every year by eliminating manual drawing BOMs and recurring seat subscriptions.
+          <p className="text-xs sm:text-sm text-[#686663] leading-relaxed">
+            When parsing assemblies with thousands of components, cloud-based tools force massive geometry uploads across slow networks. MacSolid executes natively on your workstation hardware.
           </p>
         </div>
 
-        <ROICalculator />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 rounded-2xl bg-[#F5F3EF] border border-[#151514]/[0.06]">
+            <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+              <Zap className="w-4 h-4 text-amber-600" />
+              <span>PARALLEL C++ PROCESS POOL</span>
+            </div>
+            <p className="text-xs text-[#686663] leading-relaxed">
+              Spawns multi-core worker processes using native C++ OpenCASCADE kernels. Extracts 5,000+ part trees with zero UI freezing.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#F5F3EF] border border-[#151514]/[0.06]">
+            <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>AIR-GAPPED IP PROTECTION</span>
+            </div>
+            <p className="text-xs text-[#686663] leading-relaxed">
+              Your confidential CAD geometry never leaves your local workstation. Zero telemetry, zero external network sockets, fully ITAR compliant.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#F5F3EF] border border-[#151514]/[0.06]">
+            <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+              <HardDrive className="w-4 h-4 text-blue-600" />
+              <span>PERPETUAL / TEAM WORKSTATION</span>
+            </div>
+            <p className="text-xs text-[#686663] leading-relaxed">
+              Simple 16-digit hardware-locked licensing. No monthly per-user cloud fees, no surprise pricing hikes, and works 100% offline.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Bottom CTA */}

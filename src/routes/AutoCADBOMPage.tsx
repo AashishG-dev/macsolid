@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Check, Layers, Cpu, ArrowRight, Table, Sparkles } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
-import { ROICalculator } from '../components/ROICalculator';
 
 interface PageProps {
   onBack: () => void;
@@ -117,9 +116,53 @@ export const AutoCADBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal
         </div>
       </section>
 
-      {/* ROI Section */}
-      <section className="px-6 mb-24">
-        <ROICalculator onOpenContactModal={() => onOpenContactModal('MacSolid Standard')} />
+      {/* Technical Feature Callout */}
+      <section className="px-6 mb-24 max-w-6xl mx-auto">
+        <div className="border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
+          <div className="max-w-2xl mb-8">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
+              RELIABLE DRAWING DATA EXTRACTION
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mt-2 mb-2">
+              Never Manually Type Drawing Tables Again
+            </h2>
+            <p className="text-xs sm:text-sm text-[#686663] leading-relaxed">
+              Eliminate missing parts and human transcription errors when revising AutoCAD drawing revisions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span>NESTED BLOCK HIERARCHY</span>
+              </div>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Deconstructs deeply nested dynamic blocks, attributes, and 3D solid bodies without breaking references.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span>ACCURATE BILLET &amp; PLATE SIZING</span>
+              </div>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Calculates true 3D solid bounding dimensions [L × W × H] for raw metal cut-lists and nesting.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span>1-CLICK EXCEL &amp; CSV EXPORT</span>
+              </div>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Instantly generates shop-floor Excel workbooks ready for purchasing, ERP importing, or machine cutting.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Check, ShieldCheck, Zap, FileSpreadsheet, Box, ArrowRight, Layers } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
-import { ROICalculator } from '../components/ROICalculator';
 
 interface PageProps {
   onBack: () => void;
@@ -132,9 +131,53 @@ export const SolidWorksBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
         </div>
       </section>
 
-      {/* ROI Calculator Section */}
-      <section className="px-6 mb-24">
-        <ROICalculator onOpenContactModal={() => onOpenContactModal('MacSolid Standard')} />
+      {/* Engineering Features Showcase */}
+      <section className="px-6 mb-24 max-w-6xl mx-auto">
+        <div className="border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
+          <div className="max-w-3xl mb-10">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
+              DEEP TECHNICAL EXTRACTION
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
+              Built for Real Machine Shops &amp; Estimators
+            </h2>
+            <p className="text-sm text-[#686663] leading-relaxed">
+              MacSolid replaces hours of manual SolidWorks drawing table ballooning with automated multi-body decomposition and exact raw stock envelopes.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center mb-4">
+                <Box className="w-4 h-4" />
+              </div>
+              <h3 className="font-bold text-sm text-[#151514] mb-2">PCA Minimum Raw Stock Envelope</h3>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Computes principal axes bounding envelopes for angled or organic parts. Eliminates wasteful rectangular oversizing for CNC billet and plate stock.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center mb-4">
+                <Layers className="w-4 h-4" />
+              </div>
+              <h3 className="font-bold text-sm text-[#151514] mb-2">Sheet Metal Gauge &amp; Blank Sizing</h3>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Automatically identifies sheet metal bodies, measures uniform wall thickness, and generates flat blank boundaries for laser cutting and press brake forming.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
+              <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center mb-4">
+                <FileSpreadsheet className="w-4 h-4" />
+              </div>
+              <h3 className="font-bold text-sm text-[#151514] mb-2">1-Click ERP &amp; Excel Workbooks</h3>
+              <p className="text-xs text-[#686663] leading-relaxed">
+                Directly maps isolated solid bodies to formatted .xlsx sheets complete with part numbers, material grades, cut lengths, and quantities.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Footer CTA */}

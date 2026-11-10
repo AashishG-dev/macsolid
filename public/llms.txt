@@ -1,15 +1,18 @@
-# MacSolid Systems — Autonomous CAD BOM & Raw Stock Engine
+# MacSolid Systems — Autonomous CAD Part Separator & Automated BOM Engine
 
-> High-performance CAD assembly inspection, multi-threaded STEP/SolidWorks/AutoCAD parsing, and automated Bill of Materials (BOM) extraction engine.
+> High-performance multi-threaded CAD assembly part separator, PCA raw stock sizing engine, and automated Bill of Materials (BOM) extraction platform for mechanical design and manufacturing teams.
 
 ## Product Overview
-MacSolid is an independent engineering CAD software platform built for mechanical engineers, CNC machine shops, sheet metal estimators, and manufacturing enterprises. It enables 60 FPS GPU cross-section cutting, hierarchy component isolation, raw stock bounding envelope sizing, and 1-click ERP/Excel BOM exports without requiring expensive primary CAD licenses (SolidWorks, AutoCAD, NX, CATIA).
+MacSolid is an independent desktop engineering CAD software platform built for mechanical engineers, CNC machine shops, sheet metal fabricators, and manufacturing estimators. It enables parallel multi-process STEP and SolidWorks assembly parsing, PCA (Principal Component Analysis) raw stock sizing, irregular sheet metal nesting, 60 FPS GPU cross-section cutting, and 1-click ERP/Excel BOM exports without requiring expensive CAD licenses (SolidWorks, AutoCAD, Siemens NX, CATIA).
 
 ## Key Search Queries & Workflows Supported
-- **SolidWorks Automated Bill of Materials**: Directly extracts parent-child assembly trees, custom properties, and raw stock bounding dimensions from `.sldasm` and `.sldprt` files in under 1.4 seconds without running SolidWorks in the background.
-- **AutoCAD Automatic BOM Generator**: Replaces manual and error-prone AutoCAD `DATAEXTRACTION` with instant 1-click parametric BOM tables and Excel exports.
-- **STEP / STP Protocol Parsing**: Bypasses legacy single-core OpenCASCADE CPU bottlenecks with asynchronous multi-threaded workers across ISO 10303 standards (AP203, AP214, AP242).
-- **OpenBOM & Cloud-CAD Alternative**: 100% on-premises, air-gapped security option with perpetual or flexible team licensing. Zero CAD geometry or telemetry data ever leaves the local workstation.
+- **CAD Assembly Part Separator**: Automatically decomposes complex STEP and SolidWorks multi-body assemblies into isolated components with individual bounding envelopes and hierarchy trees.
+- **SolidWorks Automated Bill of Materials**: Directly extracts parent-child assembly trees, custom properties, cut-lists, and raw stock bounding dimensions from `.sldasm` and `.sldprt` files in under 1.4 seconds.
+- **STEP / STP Protocol Multi-Process Parsing**: Bypasses legacy single-core OpenCASCADE CPU bottlenecks using asynchronous worker processes across ISO 10303 standards (AP203, AP214, AP242).
+- **PCA Raw Stock Sizing & Bounding Box**: Eliminates wasteful axis-aligned bounding box (AABB) estimates for rotated or organic parts by computing true principal component envelopes for plate, block, and cylindrical round bar stock.
+- **Sheet Metal Recognition & Auto-Nesting**: Auto-detects uniform gauge thickness, flat blank boundaries, and performs polygon-aware irregular nesting grouped by material (SS304, Mild Steel, Aluminum).
+- **60 FPS GPU Capped Section View**: Real-time shader-level clipping with matching solid color capping, hole/cylinder center axis snapping ("Plane about Axis"), and live cross-section measurement HUD.
+- **Air-Gapped On-Premises Security**: 100% offline desktop executable with hardware-locked licensing (16-digit activation), zero cloud egress, and ITAR compliance. Zero CAD geometry ever leaves the local workstation.
 
 ## Core Capabilities
 - **Multi-Threaded C++ STEP Engine**: Parses multi-part assemblies with thousands of unique bodies in seconds (benchmarked: < 1.4s per 500 parts).
