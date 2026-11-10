@@ -22,12 +22,20 @@ import { OpenBOMAlternativePage } from './routes/OpenBOMAlternativePage';
 import { ROICalculatorPage } from './routes/ROICalculatorPage';
 import { SecurityCompliancePage } from './routes/SecurityCompliancePage';
 import { SheetMetalNestingPage } from './routes/SheetMetalNestingPage';
+import { usePageSEO } from './hooks/usePageSEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function App() {
   const [currentPath, setCurrentPath] = useState(() => {
     return typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') || '/' : '/';
+  });
+
+  // Google Search Central: Dynamic title, meta description & canonical consolidation
+  usePageSEO({
+    title: 'MacSolid | Autonomous CAD Part Separator & Automated BOM Engine',
+    description: 'High-performance CAD assembly part separator and automated Bill of Materials generator. Instant raw stock PCA bounding dimensions, sheet metal blank sizing, and 60 FPS GPU section views for SolidWorks, STEP, AutoCAD & NX.',
+    path: currentPath === '/' ? '/' : currentPath,
   });
 
   const lenisRef = useRef<Lenis | null>(null);

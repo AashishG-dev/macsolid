@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ArrowLeft, Check, X, ShieldCheck, Zap, HardDrive, DollarSign, Lock, ArrowRight, Activity, Cpu } from 'lucide-react';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
   onBack: () => void;
@@ -7,10 +8,12 @@ interface PageProps {
 }
 
 export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
-  useEffect(() => {
-    document.title = 'OpenBOM Alternative: 100% On-Premises CAD BOM Extractor | MacSolid';
-    window.scrollTo(0, 0);
-  }, []);
+  usePageSEO({
+    title: 'OpenBOM Alternative: 100% On-Premises CAD BOM Extractor | MacSolid',
+    description: 'Air-gapped on-premises CAD bill of materials software. Sub-1.4s C++ execution, 60 FPS GPU cross-section inspection, zero cloud uploads.',
+    path: '/openbom-alternative',
+    breadcrumbName: 'OpenBOM Alternative',
+  });
 
   const comparisonRows = [
     {

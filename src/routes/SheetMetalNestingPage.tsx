@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ArrowLeft, Check, Layers, Zap, ArrowRight, ShieldCheck, FileSpreadsheet, Box, Scissors } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
   onBack: () => void;
@@ -8,10 +9,12 @@ interface PageProps {
 }
 
 export const SheetMetalNestingPage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
-  useEffect(() => {
-    document.title = 'Sheet Metal Blank Sizing & Multi-Part Nesting Software | MacSolid';
-    window.scrollTo(0, 0);
-  }, []);
+  usePageSEO({
+    title: 'Sheet Metal Blank Sizing & Multi-Part Nesting Software | MacSolid',
+    description: 'Automatic gauge thickness detection, flat blank boundary extraction, and irregular multi-part nesting for sheet metal estimators and laser cutting shops.',
+    path: '/sheet-metal-nesting',
+    breadcrumbName: 'Sheet Metal Nesting',
+  });
 
   const capabilities = [
     {

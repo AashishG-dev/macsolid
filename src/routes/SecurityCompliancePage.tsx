@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ArrowLeft, ShieldCheck, Lock, Server, FileCheck, ArrowRight, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
   onBack: () => void;
@@ -7,10 +8,12 @@ interface PageProps {
 }
 
 export const SecurityCompliancePage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
-  useEffect(() => {
-    document.title = 'Air-Gapped CAD Security & ITAR Compliance | MacSolid';
-    window.scrollTo(0, 0);
-  }, []);
+  usePageSEO({
+    title: 'Air-Gapped CAD Security & ITAR Compliance | MacSolid',
+    description: 'Zero cloud egress CAD assembly viewer and BOM generator for defense and aerospace engineers. ED25519 verified, ephemeral memory processing.',
+    path: '/security',
+    breadcrumbName: 'Security & Compliance',
+  });
 
   return (
     <div className="min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5]">

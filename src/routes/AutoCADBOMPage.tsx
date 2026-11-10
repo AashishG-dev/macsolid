@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ArrowLeft, Check, Layers, Cpu, ArrowRight, Table, Sparkles } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
   onBack: () => void;
@@ -8,10 +9,12 @@ interface PageProps {
 }
 
 export const AutoCADBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
-  useEffect(() => {
-    document.title = 'AutoCAD Automatic BOM Generator | Replace DATAEXTRACTION | MacSolid';
-    window.scrollTo(0, 0);
-  }, []);
+  usePageSEO({
+    title: 'AutoCAD Automatic BOM Generator | Replace DATAEXTRACTION | MacSolid',
+    description: 'Fast 1-click bill of materials generator for AutoCAD DWG and DXF drawing blocks and 3D solids. Exports shop-floor ready Excel workbooks.',
+    path: '/autocad-bom-generator',
+    breadcrumbName: 'AutoCAD Automatic BOM',
+  });
 
   return (
     <div className="min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5]">

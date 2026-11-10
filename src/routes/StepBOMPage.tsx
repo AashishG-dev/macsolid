@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ArrowLeft, Check, Layers, Cpu, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
   onBack: () => void;
@@ -8,10 +9,12 @@ interface PageProps {
 }
 
 export const StepBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
-  useEffect(() => {
-    document.title = 'STEP File BOM Extractor & 3D Raw Stock Calculator | MacSolid';
-    window.scrollTo(0, 0);
-  }, []);
+  usePageSEO({
+    title: 'STEP File BOM Extractor & 3D Raw Stock Sizing | MacSolid',
+    description: 'Multi-process ISO 10303 STEP AP203/214/242 assembly part separator. Calculates true raw stock envelopes and exports formatted Excel BOMs.',
+    path: '/step-bom-extractor',
+    breadcrumbName: 'STEP BOM Extractor',
+  });
 
   return (
     <div className="min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5]">
