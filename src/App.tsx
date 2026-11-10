@@ -12,6 +12,7 @@ import { CoverflowPricing } from './components/CoverflowPricing';
 import { EngineeringFAQ } from './components/EngineeringFAQ';
 import { ContactTrialModal } from './components/ContactTrialModal';
 import { Footer } from './components/Footer';
+import { RawStockBOMPreview } from './components/RawStockBOMPreview';
 
 // Programmatic SEO Routes
 import { SolidWorksBOMPage } from './routes/SolidWorksBOMPage';
@@ -20,6 +21,7 @@ import { StepBOMPage } from './routes/StepBOMPage';
 import { OpenBOMAlternativePage } from './routes/OpenBOMAlternativePage';
 import { ROICalculatorPage } from './routes/ROICalculatorPage';
 import { SecurityCompliancePage } from './routes/SecurityCompliancePage';
+import { SheetMetalNestingPage } from './routes/SheetMetalNestingPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -261,6 +263,24 @@ export function App() {
     );
   }
 
+  // Route: Sheet Metal Blank Sizing & Multi-Part Nesting
+  if (currentPath === '/sheet-metal-nesting') {
+    return (
+      <>
+        <SheetMetalNestingPage
+          onBack={() => navigateTo('/')}
+          onOpenContactModal={handleOpenContactModal}
+        />
+        <Footer onNavigate={navigateTo} />
+        <ContactTrialModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+          selectedEdition={selectedEdition}
+        />
+      </>
+    );
+  }
+
   // Default: Homepage Overview
   return (
     <div className="relative min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5] font-sans antialiased">
@@ -281,6 +301,7 @@ export function App() {
           onOpenContactModal={() => handleOpenContactModal('MacSolid Pro (Full BOM Engine)')}
         />
         <InteractiveCADStudio />
+        <RawStockBOMPreview />
         <AnimatedFormatStack onNavigate={navigateTo} />
         <CoverflowPricing onOpenContactModal={handleOpenContactModal} />
         <EngineeringFAQ />

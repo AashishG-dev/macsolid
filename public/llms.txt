@@ -18,8 +18,8 @@ MacSolid is an independent desktop engineering CAD software platform built for m
 - **Multi-Threaded C++ STEP Engine**: Parses multi-part assemblies with thousands of unique bodies in seconds (benchmarked: < 1.4s per 500 parts).
 - **60 FPS GPU Section Studio**: Real-time capped solid clipping along cardinal axes with precision coordinate measurement [X, Y, Z].
 - **Automated BOM & Raw Stock**: Automatic envelope calculation for plate, bar, and round stock with custom machining and kerf allowances.
-- **Sheet Metal Recognition**: Automatic gauge thickness detection and flat blank boundary analysis.
-- **Secure Air-Gapped Deployment**: Available for offline workstation operations with zero telemetry (ED25519 verified).
+- **Sheet Metal Recognition & Auto-Nesting**: Auto-detects uniform gauge thickness, flat blank boundaries, and performs multi-part nesting grouped by material (SS304, Mild Steel, Aluminum) — https://macsolid.pages.dev/sheet-metal-nesting
+- **Secure Air-Gapped Deployment**: Available for offline workstation operations with zero telemetry (ED25519 verified) — https://macsolid.pages.dev/security
 
 ## Available Editions
 - **MacSolid Lite**: 3D CAD viewer, orbit, pan, measurement, and cut-plane inspection.

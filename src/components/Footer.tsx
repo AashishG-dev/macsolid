@@ -81,6 +81,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </a>
               </li>
               <li>
+                <a
+                  href="/sheet-metal-nesting"
+                  onClick={(e) => handleLinkClick(e, '/sheet-metal-nesting')}
+                  className="text-[#686663] hover:text-[#151514] transition-colors"
+                >
+                  Sheet Metal Blank Sizing &amp; Nesting
+                </a>
+              </li>
+              <li>
                 <span className="text-[#8C8A85] cursor-not-allowed">
                   Siemens NX & JT (Preview)
                 </span>
