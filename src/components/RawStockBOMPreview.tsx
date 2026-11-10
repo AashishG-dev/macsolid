@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Layers, Check, Download, FileSpreadsheet, ArrowRight, ShieldCheck, Sparkles, TrendingDown } from 'lucide-react';
+import { Box, Layers, Check, Download, FileSpreadsheet, ArrowRight, ShieldCheck, TrendingDown } from 'lucide-react';
 
 interface BOMRow {
   item: string;
@@ -42,8 +42,7 @@ export const RawStockBOMPreview: React.FC = () => {
           — AUTOMATED RAW STOCK &amp; BOM PIPELINE
         </span>
         <h2 className="text-3xl sm:text-5xl font-bold tracking-tightest text-[#151514] mb-4">
-          Exact Bounding Envelopes. <br />
-          <span className="font-serif italic font-normal">Direct to Excel in 1.4s.</span>
+          Exact Bounding Envelopes. Direct to Excel in 1.4s.
         </h2>
         <p className="text-sm sm:text-base text-[#686663] max-w-xl leading-relaxed">
           Eliminate manual measurements. MacSolid calculates true minimum raw stock sizes for billet, plate, and round bar stock without excess material waste.

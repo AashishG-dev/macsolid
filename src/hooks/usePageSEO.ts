@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 
-interface PageSEOProps {
+export interface PageSEOProps {
   title: string;
   description: string;
   path: string;
   breadcrumbName?: string;
+  enabled?: boolean;
 }
 
-export function usePageSEO({ title, description, path, breadcrumbName }: PageSEOProps) {
+export function usePageSEO({ title, description, path, breadcrumbName, enabled = true }: PageSEOProps) {
   useEffect(() => {
-    const fullUrl = `https://macsolid.pages.dev${path.startsWith('/') ? path : '/' + path}`;
+    if (!enabled) return;
+    const fullUrl = `https://macsolid.pages.dev${path === '/' ? '/' : path.startsWith('/') ? path : '/' + path}`;
 
     // 1. Update Document Title
     document.title = title;
@@ -88,5 +90,5 @@ export function usePageSEO({ title, description, path, breadcrumbName }: PageSEO
       const el = document.getElementById('google-breadcrumb-schema');
       if (el) el.remove();
     };
-  }, [title, description, path, breadcrumbName]);
+  }, [title, description, path, breadcrumbName, enabled]);
 }

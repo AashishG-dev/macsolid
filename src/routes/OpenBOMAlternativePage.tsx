@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Check, X, ShieldCheck, Zap, HardDrive, DollarSign, Lock, ArrowRight, Activity, Cpu } from 'lucide-react';
+import { ArrowLeft, Check, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
@@ -9,68 +9,54 @@ interface PageProps {
 
 export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
   usePageSEO({
-    title: 'OpenBOM Alternative: 100% On-Premises CAD BOM Extractor | MacSolid',
-    description: 'Air-gapped on-premises CAD bill of materials software. Sub-1.4s C++ execution, 60 FPS GPU cross-section inspection, zero cloud uploads.',
+    title: 'OpenBOM Alternative | Air-Gapped Desktop CAD BOM Software | MacSolid',
+    description: 'Looking for an OpenBOM alternative? MacSolid runs 100% locally on your engineering workstation. Zero cloud uploads, no monthly per-user fees, instant C++ STEP parsing.',
     path: '/openbom-alternative',
     breadcrumbName: 'OpenBOM Alternative',
   });
 
   const comparisonRows = [
     {
-      feature: 'Data Hosting & Architecture',
-      macsolid: '100% Local On-Premises (Air-gapped desktop)',
+      feature: 'Data Hosting & Privacy',
+      macsolid: '100% On-Premises / Air-Gapped Local Workstation',
+      openbom: 'Public Multi-Tenant Cloud (AWS US-East)',
       macsolidAdvantage: true,
-      openbom: 'Public Cloud (AWS multi-tenant SaaS)',
-      openbomAdvantage: false,
     },
     {
-      feature: 'CAD Security & IP Privacy',
-      macsolid: 'Zero network calls. ITAR & proprietary IP safe.',
+      feature: 'CAD Geometry Upload Required',
+      macsolid: 'Never leaves RAM / Zero outbound network sockets',
+      openbom: 'Full 3D model uploaded to cloud servers',
       macsolidAdvantage: true,
-      openbom: 'Requires uploading full 3D models to cloud',
-      openbomAdvantage: false,
     },
     {
-      feature: 'Extraction Speed (5,000+ parts)',
-      macsolid: '1.2s to 1.8s (Multi-threaded C++20 engine)',
+      feature: 'Export Speed (1,000+ Parts)',
+      macsolid: '< 1.4 seconds (Multi-Process C++20)',
+      openbom: '45 to 180 seconds (Network upload + cloud queue)',
       macsolidAdvantage: true,
-      openbom: '45s to 3+ minutes (Cloud sync & network lag)',
-      openbomAdvantage: false,
+    },
+    {
+      feature: 'PCA Minimum Stock Envelope',
+      macsolid: 'Included (Billet, plate, round bar & sheet metal)',
+      openbom: 'Requires third-party manual custom formulas',
+      macsolidAdvantage: true,
     },
     {
       feature: 'Pricing Model',
-      macsolid: 'Fixed transparent workstation or team license',
+      macsolid: 'Predictable Workstation or Floating LAN deployment',
+      openbom: '$2,400 to $5,000+ per user/year recurring SaaS',
       macsolidAdvantage: true,
-      openbom: '$250 - $450/user/month recurring SaaS',
-      openbomAdvantage: false,
     },
     {
-      feature: 'Real-Time 3D Capped Cross-Section',
-      macsolid: 'Included (60 FPS local GPU OpenGL shader)',
+      feature: 'Offline / Defense Facility Use',
+      macsolid: 'Certified for offline SCIF & defense plants',
+      openbom: 'Impossible (Hard requirement for live internet)',
       macsolidAdvantage: true,
-      openbom: 'Limited / basic browser-based viewer',
-      openbomAdvantage: false,
     },
     {
-      feature: 'Offline Field / Shop Floor Usage',
-      macsolid: 'Works 100% without internet connection',
+      feature: 'Direct SolidWorks API & DWG Blocks',
+      macsolid: 'Native COM / Document Manager & DXF deconstruction',
+      openbom: 'Cloud CAD add-in wrapper',
       macsolidAdvantage: true,
-      openbom: 'Inoperable during internet/cloud outages',
-      openbomAdvantage: false,
-    },
-    {
-      feature: 'ERP / Excel / CSV Export',
-      macsolid: 'Instant one-click direct Excel (.xlsx) & CSV',
-      macsolidAdvantage: true,
-      openbom: 'Export via cloud dashboard',
-      openbomAdvantage: true,
-    },
-    {
-      feature: 'Memory Footprint',
-      macsolid: 'Under 140 MB RAM (C++20 Zero-copy parser)',
-      macsolidAdvantage: true,
-      openbom: 'Heavy browser tab (1.2+ GB RAM)',
-      openbomAdvantage: false,
     },
   ];
 
@@ -88,7 +74,7 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
           </button>
 
           <span className="font-semibold text-xs text-[#151514] font-mono">
-            COMPETITIVE ANALYSIS · MACSOLID VS OPENBOM
+            COMPETITIVE ANALYSIS // MACSOLID VS OPENBOM
           </span>
 
           <button
@@ -102,18 +88,17 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
 
       {/* Hero Header */}
       <header className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#151514]/[0.08] font-mono text-xs font-semibold mb-6 bg-[#F5F3EF] text-[#151514]">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-          <span>ZERO CLOUD UPLOADS · 100% AIR-GAPPED ON-PREMISES</span>
+        <div className="flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#8C8A85] mb-4 font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+          <span>ZERO CLOUD UPLOADS // 100% AIR-GAPPED ON-PREMISES</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-6 leading-tight">
-          The On-Premises <br />
-          <span className="font-serif italic font-normal">Alternative to OpenBOM.</span>
+          The On-Premises Alternative to OpenBOM.
         </h1>
 
         <p className="text-base sm:text-xl text-[#686663] max-w-2xl mx-auto leading-relaxed mb-8">
-          Tired of recurring monthly SaaS seat fees and uploading confidential CAD assemblies to third-party cloud servers? MacSolid delivers instant C++20 Bill of Materials extraction directly on your local workstation.
+          Tired of recurring monthly SaaS seat fees and uploading confidential CAD assemblies to third-party cloud servers? MacSolid delivers instant C++ Bill of Materials extraction directly on your local workstation.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
@@ -133,37 +118,60 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
         </div>
       </header>
 
-      {/* Why Teams Migrate Section */}
-      <section className="py-12 px-6 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-8 rounded-2xl border border-[#151514]/[0.08] bg-[#F5F3EF]/60 shadow-xs">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center mb-5">
-              <Lock className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-lg text-[#151514] mb-2">ITAR & Defense Ready</h3>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              OpenBOM requires CAD models to leave your network. MacSolid executes 100% locally with zero internet access, satisfying stringent aerospace, defense, and trade secret requirements.
+      {/* Why Teams Migrate - Swiss Engineering Specification Ledger */}
+      <section className="py-12 px-6 max-w-6xl mx-auto mb-16">
+        <div className="border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
+          <div className="max-w-3xl mb-8">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
+              MIGRATION RATIONALE
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
+              Why Machine Shops &amp; Defense Contractors Migrate
+            </h2>
+            <p className="text-sm text-[#686663] leading-relaxed">
+              Eliminate recurring per-user SaaS licenses and the security vulnerabilities of third-party multi-tenant cloud storage.
             </p>
           </div>
 
-          <div className="p-8 rounded-2xl border border-[#151514]/[0.08] bg-[#F5F3EF]/60 shadow-xs">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center mb-5">
-              <Cpu className="w-5 h-5" />
+          <div className="border-t border-[#151514]/15 divide-y divide-[#151514]/10 font-mono text-xs">
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>01 // ITAR &amp; DEFENSE READY</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                OpenBOM requires CAD geometry to leave your internal network. MacSolid executes 100% locally with zero internet access, satisfying stringent aerospace, defense, and trade-secret isolation requirements.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-emerald-700 font-bold">
+                COMPLIANCE: AIR-GAPPED SCIF
+              </div>
             </div>
-            <h3 className="font-bold text-lg text-[#151514] mb-2">40x Faster Processing</h3>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Instead of browser-based cloud queueing, MacSolid uses native SIMD and multi-core C++20 parsing to digest assemblies with 10,000+ parts in under 2 seconds.
-            </p>
-          </div>
 
-          <div className="p-8 rounded-2xl border border-[#151514]/[0.08] bg-[#F5F3EF]/60 shadow-xs">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center mb-5">
-              <DollarSign className="w-5 h-5" />
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>02 // 40X FASTER PROCESSING</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Instead of browser-based cloud queueing and upload bottlenecks, MacSolid uses native multi-process C++ workers to parse 10,000+ component assemblies in under 2 seconds.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                THROUGHPUT: &lt; 2S / 10K PARTS
+              </div>
             </div>
-            <h3 className="font-bold text-lg text-[#151514] mb-2">Predictable Licensing</h3>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Stop paying recurring $2,400–$5,000/seat annual subscriptions for every draftsman. MacSolid offers simple perpetual or transparent team workstation deployments.
-            </p>
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>03 // PREDICTABLE SEAT PRICING</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Stop paying recurring $2,400–$5,000/seat annual subscriptions for every draftsman. MacSolid offers simple perpetual or transparent team workstation deployments.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#151514] font-semibold">
+                ANNUAL SAVINGS: UP TO 75%
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -213,10 +221,10 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
                     </td>
                     <td className="py-4 px-6 font-mono text-[#686663]">
                       <div className="flex items-center gap-2">
-                        {row.openbomAdvantage ? (
-                          <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                        ) : (
+                        {row.macsolidAdvantage ? (
                           <X className="w-4 h-4 text-red-500 shrink-0" />
+                        ) : (
+                          <span className="w-4 h-4 shrink-0" />
                         )}
                         <span>{row.openbom}</span>
                       </div>
@@ -225,58 +233,6 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-
-        {/* Nominative Fair Use & Trademark Attribution */}
-        <p className="text-[11px] font-mono text-[#8C8A85] text-center mt-4">
-          * OpenBOM® is a trademark of Newman Cloud Inc. MacSolid is an independent platform developed by MacSolid Systems with no sponsorship or affiliation with Newman Cloud Inc. Comparison data is accurate as of November 2026 based on public software specifications.
-        </p>
-      </section>
-
-      {/* Engineering Technical Advantage Showcase */}
-      <section className="py-16 px-6 max-w-6xl mx-auto border-t border-[#151514]/[0.08]">
-        <div className="text-center mb-10 max-w-2xl mx-auto">
-          <span className="text-xs font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
-            ARCHITECTURE ADVANTAGE
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
-            Local C++ Performance vs. Cloud SaaS Latency
-          </h2>
-          <p className="text-xs sm:text-sm text-[#686663] leading-relaxed">
-            When parsing assemblies with thousands of components, cloud-based tools force massive geometry uploads across slow networks. MacSolid executes natively on your workstation hardware.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-[#F5F3EF] border border-[#151514]/[0.06]">
-            <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
-              <Zap className="w-4 h-4 text-amber-600" />
-              <span>PARALLEL C++ PROCESS POOL</span>
-            </div>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Spawns multi-core worker processes using native C++ OpenCASCADE kernels. Extracts 5,000+ part trees with zero UI freezing.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[#F5F3EF] border border-[#151514]/[0.06]">
-            <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>AIR-GAPPED IP PROTECTION</span>
-            </div>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Your confidential CAD geometry never leaves your local workstation. Zero telemetry, zero external network sockets, fully ITAR compliant.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[#F5F3EF] border border-[#151514]/[0.06]">
-            <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
-              <HardDrive className="w-4 h-4 text-blue-600" />
-              <span>PERPETUAL / TEAM WORKSTATION</span>
-            </div>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Simple 16-digit hardware-locked licensing. No monthly per-user cloud fees, no surprise pricing hikes, and works 100% offline.
-            </p>
           </div>
         </div>
       </section>
@@ -293,7 +249,7 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
           onClick={() => onOpenContactModal('MacSolid Enterprise (Air-Gapped)')}
           className="px-8 py-3.5 rounded-full bg-[#151514] text-[#EBE9E5] text-xs font-semibold hover:bg-[#282826] transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
         >
-          <span>Request MacSolid Trial & Evaluation</span>
+          <span>Request MacSolid Trial &amp; Evaluation</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </section>
@@ -301,3 +257,4 @@ export const OpenBOMAlternativePage: React.FC<PageProps> = ({ onBack, onOpenCont
   );
 };
 
+export default OpenBOMAlternativePage;

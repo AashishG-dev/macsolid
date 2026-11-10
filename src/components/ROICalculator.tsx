@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, ArrowRight, DollarSign, Clock, Sparkles } from 'lucide-react';
+import { Calculator, ArrowRight, DollarSign, Clock } from 'lucide-react';
 
 interface ROICalculatorProps {
   onOpenContactModal?: () => void;
@@ -28,7 +28,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenContactModal
       </div>
 
       <h3 className="text-2xl sm:text-4xl font-bold tracking-tightest text-[#151514] mb-3">
-        Calculate Your Annual <span className="font-serif italic font-normal">CAD Labor Savings.</span>
+        Calculate Your Annual CAD Labor Savings.
       </h3>
       <p className="text-sm text-[#686663] mb-8 max-w-xl">
         See how much engineering time and payroll your team currently burns on manual Excel BOM extraction and raw stock measurement.
@@ -105,7 +105,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenContactModal
               ${totalCostWastedAnnual.toLocaleString()}
             </div>
             <div className="font-mono text-[11px] text-emerald-400 font-semibold mb-6 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>{timeSavedPercent}% Faster BOM Extraction</span>
             </div>
 

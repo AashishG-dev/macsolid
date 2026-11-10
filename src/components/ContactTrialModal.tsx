@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, Mail, Calendar, Sparkles, Building2, User, Send } from 'lucide-react';
+import { X, Check, Mail, Calendar, Building2, User, Send } from 'lucide-react';
 
 interface ContactTrialModalProps {
   isOpen: boolean;
@@ -40,6 +40,17 @@ export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const existing = JSON.parse(localStorage.getItem('macsolid_trial_inquiries') || '[]');
+      existing.push({
+        ...formData,
+        edition,
+        submittedAt: new Date().toISOString(),
+      });
+      localStorage.setItem('macsolid_trial_inquiries', JSON.stringify(existing));
+    } catch {
+      // Fallback if localStorage quota is exceeded or unavailable
+    }
     setSubmitted(true);
   };
 
@@ -90,9 +101,9 @@ export const ContactTrialModal: React.FC<ContactTrialModalProps> = ({
           <div>
             {/* Header */}
             <div className="mb-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#151514]/[0.08] bg-[#EBE9E5] text-[10px] font-mono text-[#151514] mb-3">
-                <Sparkles className="w-3 h-3 text-[#151514]" />
-                <span>EVALUATION & DISCOVERY</span>
+              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[#8C8A85] mb-3 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>EVALUATION &amp; DISCOVERY</span>
               </div>
               <h3 id="modal-title" className="text-2xl font-bold tracking-tight text-[#151514] mb-1">
                 Contact for Trial & Consultation

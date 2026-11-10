@@ -107,6 +107,8 @@ export const AnimatedFormatStack: React.FC<AnimatedFormatStackProps> = ({ onNavi
         { label: 'Gauge', value: 'Auto-Thickness Sizing' },
       ],
       accentColor: '#059669',
+      href: '/sheet-metal-nesting',
+      ctaText: 'Explore Sheet Metal & Raw Stock Sizing',
     },
     {
       id: 'excel',
@@ -124,6 +126,8 @@ export const AnimatedFormatStack: React.FC<AnimatedFormatStackProps> = ({ onNavi
         { label: 'Drawing', value: 'Auto 2D Projections' },
       ],
       accentColor: '#D97706',
+      href: '/roi-calculator',
+      ctaText: 'Calculate Engineering Time & Cost Savings',
     },
   ];
 
@@ -199,7 +203,7 @@ export const AnimatedFormatStack: React.FC<AnimatedFormatStackProps> = ({ onNavi
           — INTEROPERABILITY MATRIX
         </span>
         <h2 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-3">
-          Universal CAD <span className="font-serif italic font-normal">Ingestion.</span>
+          Universal CAD Ingestion Engine.
         </h2>
         <p className="text-base text-[#686663] max-w-xl mb-6">
           Native integration with industry-standard assemblies, neutral protocols, and ERP pipelines.

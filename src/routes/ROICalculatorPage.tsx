@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import { ArrowLeft, Calculator, TrendingUp, DollarSign, Clock, Users, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ROICalculator } from '../components/ROICalculator';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 interface PageProps {
   onBack: () => void;
@@ -8,10 +9,12 @@ interface PageProps {
 }
 
 export const ROICalculatorPage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
-  useEffect(() => {
-    document.title = 'BOM Automation ROI Calculator | Engineering Cost Savings | MacSolid';
-    window.scrollTo(0, 0);
-  }, []);
+  usePageSEO({
+    title: 'CAD BOM Labor Savings & ROI Calculator | MacSolid',
+    description: 'Calculate your exact annual engineering labor savings by automating SolidWorks and AutoCAD Bill of Materials extraction and raw stock bounding with MacSolid.',
+    path: '/roi-calculator',
+    breadcrumbName: 'ROI Calculator',
+  });
 
   return (
     <div className="min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5]">
@@ -27,11 +30,11 @@ export const ROICalculatorPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
           </button>
 
           <span className="font-semibold text-xs text-[#151514] font-mono">
-            ENGINEERING FINANCIAL METRICS & LABOR SAVINGS
+            ENGINEERING ECONOMICS // ROI MODEL
           </span>
 
           <button
-            onClick={() => onOpenContactModal('MacSolid Pro (Full BOM Engine)')}
+            onClick={() => onOpenContactModal('MacSolid Standard (Full BOM & Raw Stock Engine)')}
             className="text-xs font-semibold px-4 py-2 rounded-full bg-[#151514] text-[#EBE9E5] hover:bg-[#242422] transition-all cursor-pointer shadow-xs"
           >
             Request Evaluation
@@ -41,39 +44,77 @@ export const ROICalculatorPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
 
       {/* Hero Header */}
       <header className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#151514]/[0.08] font-mono text-xs font-semibold mb-6 bg-[#F5F3EF] text-[#151514]">
-          <Calculator className="w-3.5 h-3.5 text-blue-600" />
-          <span>REAL-TIME ENGINEERING ECONOMICS MODEL</span>
+        <div className="flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#8C8A85] mb-4 font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+          <span>ENGINEERING LABOR ANALYSIS</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-6 leading-tight">
-          CAD BOM Automation <br />
-          <span className="font-serif italic font-normal">ROI Calculator.</span>
+          CAD BOM Automation ROI Calculator.
         </h1>
 
         <p className="text-base sm:text-xl text-[#686663] max-w-2xl mx-auto leading-relaxed mb-8">
-          Quantify the exact dollar value and engineering hours your organization wastes every month manually drafting Bill of Materials tables in SolidWorks and AutoCAD.
+          Quantify the exact dollar value and engineering hours your organization saves every month by replacing manual SolidWorks drawing tables with automated C++ BOM extraction.
         </p>
       </header>
 
       {/* Main Interactive Calculator */}
       <main className="pb-20 px-6 max-w-6xl mx-auto">
-        <ROICalculator />
+        <ROICalculator
+          onOpenContactModal={() => onOpenContactModal('MacSolid Standard (Full BOM & Raw Stock Engine)')}
+        />
 
-        {/* Methodology Breakdown */}
-        <section className="mt-16 p-8 rounded-2xl border border-[#151514]/[0.08] bg-[#F5F3EF]/60">
-          <h3 className="text-base font-bold text-[#151514] mb-3">
-            Calculation Methodology & Assumptions
-          </h3>
-          <p className="text-xs text-[#686663] leading-relaxed mb-4">
-            Our return-on-investment model is grounded in real-world benchmark data from over 400 manufacturing and mechanical design operations. The baseline manual workflow includes:
-          </p>
-          <ul className="space-y-2 text-xs text-[#686663] font-mono list-disc list-inside">
-            <li>Manual ballooning and drawing table verification in SolidWorks / AutoCAD (avg 3.5 hrs / assembly).</li>
-            <li>Typing part numbers, material specs, and stock bounding dimensions into Excel spreadsheets.</li>
-            <li>Revising BOM tables when engineering change orders (ECOs) alter component dimensions or quantities.</li>
-            <li>Purchasing and supply chain scrap caused by human transcription errors in ERP imports.</li>
-          </ul>
+        {/* Methodology Ledger */}
+        <section className="mt-16 border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
+          <div className="max-w-3xl mb-8">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
+              MODEL ASSUMPTIONS &amp; BENCHMARKS
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
+              Calculation Methodology
+            </h2>
+            <p className="text-xs sm:text-sm text-[#686663] leading-relaxed">
+              Our engineering economics model is parameterized directly from machine-shop drafting time logs and CNC raw stock cut-off waste rates:
+            </p>
+          </div>
+
+          <div className="border-t border-[#151514]/15 divide-y divide-[#151514]/10 font-mono text-xs">
+            <div className="py-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+              <div className="md:col-span-4 text-[#8C8A85] font-semibold">
+                01 // DRAWING TABLE BALLOONING
+              </div>
+              <div className="md:col-span-8 font-sans text-xs text-[#151514] leading-relaxed">
+                Manual part tagging, sub-assembly hierarchy tracking, and drawing sheet table updates take an estimated 0.9 hours per 100 components in SolidWorks and AutoCAD.
+              </div>
+            </div>
+
+            <div className="py-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+              <div className="md:col-span-4 text-[#8C8A85] font-semibold">
+                02 // RAW STOCK ENVELOPE MEASURING
+              </div>
+              <div className="md:col-span-8 font-sans text-xs text-[#151514] leading-relaxed">
+                Estimators manually measuring rotated parts in 3D CAD to derive billet, plate, and bar dimensions incur substantial payroll hours and frequent oversizing scrap.
+              </div>
+            </div>
+
+            <div className="py-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+              <div className="md:col-span-4 text-[#8C8A85] font-semibold">
+                03 // ECO REVISION PROPAGATION
+              </div>
+              <div className="md:col-span-8 font-sans text-xs text-[#151514] leading-relaxed">
+                Engineering Change Orders (ECOs) require re-verifying BOM counts and dimensions across drawings. MacSolid runs sub-second re-extraction on revised assemblies.
+              </div>
+            </div>
+
+            <div className="py-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+              <div className="md:col-span-4 text-[#8C8A85] font-semibold">
+                04 // ERP TRANSCRIPTION ERRORS
+              </div>
+              <div className="md:col-span-8 font-sans text-xs text-[#151514] leading-relaxed">
+                Manual copy-paste into Excel generates human transcription mistakes. MacSolid direct .XLSX export guarantees 100% deterministic cut-list integrity.
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Bottom CTA */}
@@ -82,10 +123,10 @@ export const ROICalculatorPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
             Ready to Reclaim These Engineering Hours?
           </h2>
           <p className="text-sm text-[#686663] max-w-lg mx-auto mb-8">
-            Experience sub-second C++20 BOM extraction with zero setup overhead and complete ITAR air-gapped security.
+            Experience sub-second C++ BOM extraction with zero setup overhead and complete ITAR air-gapped security.
           </p>
           <button
-            onClick={() => onOpenContactModal('MacSolid Pro (Full BOM Engine)')}
+            onClick={() => onOpenContactModal('MacSolid Standard (Full BOM & Raw Stock Engine)')}
             className="px-8 py-3.5 rounded-full bg-[#151514] text-[#EBE9E5] text-xs font-semibold hover:bg-[#282826] transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
           >
             <span>Request Evaluation License</span>
@@ -97,3 +138,4 @@ export const ROICalculatorPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
   );
 };
 
+export default ROICalculatorPage;

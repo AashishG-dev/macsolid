@@ -7,7 +7,6 @@ import {
   Monitor,
   Cpu,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 
 interface PricingTier {
@@ -189,19 +188,20 @@ export const CoverflowPricing: React.FC<CoverflowPricingProps> = ({ onOpenContac
     >
       {/* Editorial Section Header */}
       <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-        <span className="font-mono text-[11px] uppercase tracking-widest text-[#151514] mb-3 font-semibold opacity-60">
-          — EDITIONS & DEPLOYMENT
-        </span>
+        <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#8C8A85] mb-3 font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+          <span>SEC. 04 — DEPLOYMENT ARCHITECTURE</span>
+        </div>
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tightest text-[#151514] mb-3 sm:mb-4">
-          Tailored to Your <span className="font-serif italic font-normal">Workflow.</span>
+          Tailored to Your Production Workflow.
         </h2>
         <p className="text-sm sm:text-base lg:text-lg text-[#686663] max-w-xl leading-relaxed">
           Predictable engineering licenses designed for individual estimators, machine shops, and multi-facility manufacturing enterprises.
         </p>
       </div>
 
-      {/* Main Sketch-style Aura Backdrop Container */}
-      <div className="relative rounded-[28px] sm:rounded-[40px] p-4 sm:p-7 lg:p-10 bg-gradient-to-br from-[#FFF5EA]/75 via-[#FFFFFF]/85 to-[#F4ECFD]/65 border border-[#151514]/[0.08] shadow-[0_24px_70px_-20px_rgba(21,21,20,0.08)] backdrop-blur-md overflow-hidden">
+      {/* Swiss Precision Engineering Backdrop Container */}
+      <div className="relative rounded-[28px] sm:rounded-[40px] p-4 sm:p-7 lg:p-10 bg-[#F5F3EF]/95 border border-[#151514]/[0.08] shadow-[0_24px_70px_-20px_rgba(21,21,20,0.06)] backdrop-blur-md overflow-hidden bg-cad-grid">
         
         {/* Responsive 3-Column Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
@@ -211,10 +211,10 @@ export const CoverflowPricing: React.FC<CoverflowPricingProps> = ({ onOpenContac
             return (
               <div
                 key={tier.id}
-                className={`relative bg-white rounded-[26px] p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 group ${
+                className={`relative bg-[#FFFFFF] rounded-[24px] p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 group ${
                   isStandard
-                    ? 'border-2 border-[#151514] shadow-[0_18px_45px_-12px_rgba(21,21,20,0.14)] ring-4 ring-black/[0.02]'
-                    : 'border border-[#151514]/[0.08] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.05)] hover:border-[#151514]/[0.18] hover:shadow-[0_20px_40px_-12px_rgba(21,21,20,0.08)]'
+                    ? 'border-2 border-[#151514] shadow-[0_18px_45px_-12px_rgba(21,21,20,0.12)]'
+                    : 'border border-[#151514]/[0.09] shadow-[0_8px_24px_-10px_rgba(0,0,0,0.04)] hover:border-[#151514]/[0.18]'
                 }`}
               >
                 <div>
@@ -224,16 +224,16 @@ export const CoverflowPricing: React.FC<CoverflowPricingProps> = ({ onOpenContac
                       className={`font-mono text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full ${
                         isStandard
                           ? 'bg-[#151514] text-[#EBE9E5]'
-                          : 'bg-[#F0EEEA] text-[#686663] border border-[#151514]/[0.06]'
+                          : 'bg-[#EBE9E5] text-[#686663] border border-[#151514]/[0.06]'
                       }`}
                     >
                       {isStandard ? 'FLAGSHIP EDITION' : tier.statusBadge}
                     </span>
 
                     {isStandard && (
-                      <div className="flex items-center gap-1 text-[11px] font-semibold text-[#151514]">
-                        <Sparkles className="w-3.5 h-3.5 text-[#151514]" />
-                        <span>Most Selected</span>
+                      <div className="flex items-center gap-1.5 text-[10px] font-mono font-semibold tracking-wider text-[#151514] uppercase">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                        <span>PRIMARY CHOICE</span>
                       </div>
                     )}
                   </div>

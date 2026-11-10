@@ -750,8 +750,8 @@ export function LiquidNavbar({
       step(dt, now);
       draw();
       const busy = s.moving || s.rips.length || s.sats.length || s.mouse.s > 0.01;
-      // ambient water keeps moving while visible; reduced-motion only animates on change
-      if (s.visible && (!s.reduce || busy)) s.raf = requestAnimationFrame(tick);
+      // Ambient water only animates when transitioning, interacting, or busy
+      if (s.visible && busy) s.raf = requestAnimationFrame(tick);
       else s.raf = 0;
     };
     s.raf = requestAnimationFrame(tick);

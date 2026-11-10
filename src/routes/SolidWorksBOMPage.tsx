@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Check, ShieldCheck, Zap, FileSpreadsheet, Box, ArrowRight, Layers } from 'lucide-react';
+import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
 import { usePageSEO } from '../hooks/usePageSEO';
 
@@ -44,14 +44,13 @@ export const SolidWorksBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
 
       {/* Hero Header */}
       <header className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#151514]/[0.08] font-mono text-xs font-semibold mb-6 bg-[#F5F3EF] text-[#151514]">
-          <Zap className="w-3.5 h-3.5 text-amber-600" />
-          <span>100% NATIVE SOLIDWORKS API & STEP EXTRACTION</span>
+        <div className="flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#8C8A85] mb-4 font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+          <span>SOLIDWORKS COM &amp; PARASOLID PIPELINE</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-6 leading-tight">
-          SolidWorks Automated <br />
-          <span className="font-serif italic font-normal">Bill of Materials Generator.</span>
+          SolidWorks Automated Bill of Materials Generator.
         </h1>
 
         <p className="text-base sm:text-xl text-[#686663] max-w-2xl mx-auto leading-relaxed mb-8">
@@ -83,7 +82,7 @@ export const SolidWorksBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
       {/* Detailed Technical Comparison Table */}
       <section className="max-w-5xl mx-auto px-6 mb-24">
         <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#151514] mb-8 text-center">
-          Manual SolidWorks BOMs vs. <span className="font-serif italic font-normal">MacSolid Engine.</span>
+          Manual SolidWorks BOMs vs. MacSolid Engine
         </h2>
 
         <div className="bg-white rounded-3xl border border-[#151514]/[0.08] overflow-hidden shadow-sm">
@@ -149,42 +148,65 @@ export const SolidWorksBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
-              <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center mb-4">
-                <Box className="w-4 h-4" />
+          {/* Swiss Technical Specification Ledger */}
+          <div className="border-t border-[#151514]/15 divide-y divide-[#151514]/10 font-mono text-xs">
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>01 // TOPOLOGY EXTRACTION</span>
               </div>
-              <h3 className="font-bold text-sm text-[#151514] mb-2">PCA Minimum Raw Stock Envelope</h3>
-              <p className="text-xs text-[#686663] leading-relaxed">
-                Computes principal axes bounding envelopes for angled or organic parts. Eliminates wasteful rectangular oversizing for CNC billet and plate stock.
-              </p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Native parsing via SolidWorks Document Manager API and Parasolid binary stream extraction. Deconstructs deep multi-level sub-assembly trees and identifies weldment cut-lists without launching active SolidWorks GUI seats.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                BENCHMARK: &lt; 1.4s / 500 PARTS
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center mb-4">
-                <Layers className="w-4 h-4" />
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>02 // PCA BOUNDING ENVELOPE</span>
               </div>
-              <h3 className="font-bold text-sm text-[#151514] mb-2">Sheet Metal Gauge &amp; Blank Sizing</h3>
-              <p className="text-xs text-[#686663] leading-relaxed">
-                Automatically identifies sheet metal bodies, measures uniform wall thickness, and generates flat blank boundaries for laser cutting and press brake forming.
-              </p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Computes principal component axes bounding boxes with Welzl minimum enclosing boundary verification. Eliminates wasteful rectangular oversizing for CNC billet, flat bar, and round bar raw stock.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-emerald-700 font-bold">
+                STOCK SAVINGS: -35% AVG
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center mb-4">
-                <FileSpreadsheet className="w-4 h-4" />
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>03 // SHEET METAL GAUGE</span>
               </div>
-              <h3 className="font-bold text-sm text-[#151514] mb-2">1-Click ERP &amp; Excel Workbooks</h3>
-              <p className="text-xs text-[#686663] leading-relaxed">
-                Directly maps isolated solid bodies to formatted .xlsx sheets complete with part numbers, material grades, cut lengths, and quantities.
-              </p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Automatically isolates sheet metal solid bodies, measures uniform wall gauge, and calculates flat blank dimensions for CNC laser profiling and press brake bending.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                TOLERANCE: ±0.01 MM
+              </div>
+            </div>
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>04 // ERP / EXCEL WORKBOOK</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Directly maps structured multi-body attributes into shop-floor ready Excel spreadsheets with custom part numbering, quantities, material grades, cut lengths, and weights.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#151514] font-semibold">
+                EXPORT: 1-CLICK .XLSX / .CSV
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <footer className="border-t border-[#151514]/[0.08] py-16 px-6 text-center">
+      {/* Bottom CTA */}
+      <section className="border-t border-[#151514]/[0.08] py-16 px-6 text-center">
         <h3 className="text-2xl font-bold tracking-tight text-[#151514] mb-3">
           Ready to automate your SolidWorks BOM pipeline?
         </h3>
@@ -200,7 +222,7 @@ export const SolidWorksBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactMo
         <p className="text-[10px] font-mono text-[#8C8A85] mt-6 max-w-xl mx-auto">
           SolidWorks® is a registered trademark of Dassault Systèmes SolidWorks Corp. MacSolid is an independent platform and is not affiliated with, endorsed by, or sponsored by Dassault Systèmes.
         </p>
-      </footer>
+      </section>
     </div>
   );
 };

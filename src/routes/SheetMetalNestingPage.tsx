@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Check, Layers, Zap, ArrowRight, ShieldCheck, FileSpreadsheet, Box, Scissors } from 'lucide-react';
+import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
 import { usePageSEO } from '../hooks/usePageSEO';
 
@@ -10,38 +10,11 @@ interface PageProps {
 
 export const SheetMetalNestingPage: React.FC<PageProps> = ({ onBack, onOpenContactModal }) => {
   usePageSEO({
-    title: 'Sheet Metal Blank Sizing & Multi-Part Nesting Software | MacSolid',
-    description: 'Automatic gauge thickness detection, flat blank boundary extraction, and irregular multi-part nesting for sheet metal estimators and laser cutting shops.',
+    title: 'Sheet Metal Part Separator & Automated Nesting | MacSolid',
+    description: 'Automated 3D sheet metal thickness detection, flat blank sizing, and 2D nesting for laser cutting and CNC punch presses. Exports ERP-ready cut-lists in seconds.',
     path: '/sheet-metal-nesting',
     breadcrumbName: 'Sheet Metal Nesting',
   });
-
-  const capabilities = [
-    {
-      title: 'Automatic Gauge & Thickness Detection',
-      desc: 'Instantly identifies uniform sheet metal bodies across assemblies. Detects material thickness from 0.5 mm to 25 mm without manual measurement.',
-    },
-    {
-      title: 'Flat Blank Boundary Extraction',
-      desc: 'Computes flat blank perimeter dimensions, overall envelope, and surface area directly from 3D CAD files for laser and plasma cutting estimators.',
-    },
-    {
-      title: 'Multi-Part Sheet Stock Nesting',
-      desc: 'Groups components by material grade (SS304, Mild Steel, Aluminum) and arranges parts efficiently on standard sheet sizes with live utilization percentages.',
-    },
-    {
-      title: 'Cut Length & Pierce Estimating',
-      desc: 'Calculates total outer perimeter cut lengths and internal cutout counts, providing estimators with exact machine run-time metrics for job quoting.',
-    },
-    {
-      title: '1-Click Shop-Floor Excel Export',
-      desc: 'Outputs customer-ready fabrication workbooks complete with part numbers, quantities, material grades, sheet sizes, and scrap ratios.',
-    },
-    {
-      title: '100% Air-Gapped Workstation Security',
-      desc: 'Runs entirely on your local Windows PC. Proprietary client drawings and sheet metal assemblies never leave your internal network.',
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-[#EBE9E5] text-[#151514] selection:bg-[#151514] selection:text-[#EBE9E5]">
@@ -71,14 +44,13 @@ export const SheetMetalNestingPage: React.FC<PageProps> = ({ onBack, onOpenConta
 
       {/* Hero Header */}
       <header className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#151514]/[0.08] font-mono text-xs font-semibold mb-6 bg-[#F5F3EF] text-[#151514]">
-          <Scissors className="w-3.5 h-3.5 text-blue-600" />
+        <div className="flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#8C8A85] mb-4 font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
           <span>AUTOMATED FABRICATION &amp; ESTIMATING ENGINE</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-6 leading-tight">
-          Sheet Metal Blank Sizing &amp; <br />
-          <span className="font-serif italic font-normal">Automated Part Nesting.</span>
+          Sheet Metal Blank Sizing &amp; Automated Part Nesting.
         </h1>
 
         <p className="text-base sm:text-xl text-[#686663] max-w-2xl mx-auto leading-relaxed mb-8">
@@ -115,38 +87,92 @@ export const SheetMetalNestingPage: React.FC<PageProps> = ({ onBack, onOpenConta
         </div>
       </section>
 
-      {/* 6 Core Capabilities */}
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="text-xs font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
-            FABRICATION INTELLIGENCE
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#151514] mt-2">
-            Built for Laser Cutting &amp; Job Shop Estimators
-          </h2>
-          <p className="text-sm text-[#686663] mt-2 max-w-xl mx-auto">
-            Stop manually measuring drawings and typing dimensions. MacSolid turns complex 3D customer files into verified fabrication cut-lists automatically.
-          </p>
-        </div>
+      {/* Swiss Engineering Specification Ledger */}
+      <section className="py-16 px-6 max-w-6xl mx-auto mb-16">
+        <div className="border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
+          <div className="max-w-3xl mb-8">
+            <span className="text-xs font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
+              FABRICATION SPECIFICATION
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
+              Built for Laser Cutting &amp; Job Shop Estimators
+            </h2>
+            <p className="text-sm text-[#686663] leading-relaxed">
+              Stop manually measuring drawings and typing dimensions. MacSolid turns complex 3D customer assemblies into verified fabrication cut-lists automatically.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {capabilities.map((cap, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-2xl border border-[#151514]/[0.08] bg-[#F5F3EF]/70 hover:bg-[#F5F3EF] transition-all shadow-xs"
-            >
-              <div className="w-8 h-8 rounded-xl bg-[#151514]/5 text-[#151514] flex items-center justify-center mb-4">
-                <Check className="w-4 h-4 text-emerald-600" />
+          <div className="border-t border-[#151514]/15 divide-y divide-[#151514]/10 font-mono text-xs">
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>01 // GAUGE RECOGNITION</span>
               </div>
-              <h3 className="font-bold text-sm text-[#151514] mb-2">{cap.title}</h3>
-              <p className="text-xs text-[#686663] leading-relaxed">{cap.desc}</p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Scans 3D solid bodies for uniform wall thickness and bend relief radii. Automatically categorizes components by sheet metal gauge (e.g. 16 Ga, 10 Ga, 3mm Plate).
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                PRECISION: ±0.01 MM
+              </div>
             </div>
-          ))}
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>02 // FLAT BLANK FOOTPRINT</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Calculates flat envelope dimensions [Length × Width] and true surface areas to calculate raw sheet material consumption and laser cut cycle times.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-emerald-700 font-bold">
+                ENVELOPE: ORIENTED PCA
+              </div>
+            </div>
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>03 // ALLOY SORTING</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Groups parts by material grade (SS304, Aluminum 5052-H32, Mild Steel A36) into segregated job cut-lists so machine operators never mix sheet stacks.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                SORTING: AUTOMATIC
+              </div>
+            </div>
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>04 // 2D NESTING DISPATCH</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Generates tight bounding polygon layouts for standard 4×8 ft and 5×10 ft sheet sizes, maximizing sheet utilization and minimizing skeleton scrap.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-emerald-700 font-bold">
+                SCRAP REDUCTION: UP TO 28%
+              </div>
+            </div>
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>05 // QUOTING &amp; ERP EXPORT</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Exports formatted Excel cut-lists with part numbers, quantities, material grades, pierces, and cut perimeters for immediate costing in job-shop ERP software.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#151514] font-semibold">
+                EXPORT: 1-CLICK EXCEL
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Bottom CTA */}
-      <footer className="border-t border-[#151514]/[0.08] py-20 px-6 text-center max-w-4xl mx-auto">
+      <section className="border-t border-[#151514]/[0.08] py-20 px-6 text-center max-w-4xl mx-auto">
         <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mb-3">
           Accelerate your sheet metal quoting today.
         </h3>
@@ -160,7 +186,7 @@ export const SheetMetalNestingPage: React.FC<PageProps> = ({ onBack, onOpenConta
           <span>Request Evaluation License</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
-      </footer>
+      </section>
     </div>
   );
 };

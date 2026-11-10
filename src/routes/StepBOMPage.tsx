@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Check, Layers, Cpu, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
 import { CADViewport3D } from '../components/CADViewport3D';
 import { usePageSEO } from '../hooks/usePageSEO';
 
@@ -30,7 +30,7 @@ export const StepBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal })
           </button>
 
           <span className="font-semibold text-xs text-[#151514] font-mono">
-            STEP PROTOCOL ENGINE (AP203 / AP214 / AP242)
+            ISO STEP KERNEL ENGINE
           </span>
 
           <button
@@ -44,14 +44,13 @@ export const StepBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal })
 
       {/* Hero Header */}
       <header className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#151514]/[0.08] font-mono text-xs font-semibold mb-6 bg-[#F5F3EF] text-[#151514]">
-          <Layers className="w-3.5 h-3.5 text-blue-600" />
-          <span>MULTI-THREADED ISO 10303 ASYNC WORKER POOL</span>
+        <div className="flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#8C8A85] mb-4 font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+          <span>MULTI-PROCESS ISO 10303 PROTOCOL</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tightest text-[#151514] mb-6 leading-tight">
-          STEP File BOM Extractor & <br />
-          <span className="font-serif italic font-normal">Raw Stock Calculator.</span>
+          STEP File BOM Extractor &amp; Raw Stock Sizing.
         </h1>
 
         <p className="text-base sm:text-xl text-[#686663] max-w-2xl mx-auto leading-relaxed mb-8">
@@ -80,96 +79,133 @@ export const StepBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal })
         </div>
       </section>
 
-      {/* Technical Capabilities */}
+      {/* Side-by-Side Architectural Benchmark */}
       <section className="max-w-5xl mx-auto px-6 mb-24">
         <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#151514] mb-8 text-center">
-          Engineered for Heavy <span className="font-serif italic font-normal">Multi-Gigabyte Assemblies.</span>
+          Legacy OpenCASCADE Wrappers vs. MacSolid Async Pool
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-3xl bg-white border border-[#151514]/[0.08] shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4">
-              <Zap className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-[#151514] mb-2">Bypasses CPU Bottlenecks</h3>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Standard OpenCASCADE wrappers single-thread STEP parsing, causing lengthy freezes. MacSolid uses an asynchronous worker pool that divides models across all CPU cores.
-            </p>
+        <div className="bg-white rounded-3xl border border-[#151514]/[0.08] overflow-hidden shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 border-b border-[#151514]/[0.08] bg-[#F5F3EF] p-4 text-xs font-mono font-bold text-[#151514]">
+            <div>ASSEMBLY PARSING PARAMETER</div>
+            <div className="text-[#8C8A85]">SINGLE-THREADED WRAPPERS</div>
+            <div className="text-emerald-700">MACSOLID ASYNC WORKER POOL</div>
           </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-[#151514]/[0.08] shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-[#151514] mb-2">Automatic B-Rep Surface Healing</h3>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Imported files from third-party suppliers often contain inverted normals and unstitched edges. MacSolid automatically repairs topology to ensure exact BOM counts.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-3xl bg-white border border-[#151514]/[0.08] shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-[#151514] mb-2">PCA Principal Axes Sizing</h3>
-            <p className="text-xs text-[#686663] leading-relaxed">
-              Eliminates inaccurate bounding boxes on rotated parts. Calculates true minimum envelope dimensions for bar, plate, and billet stock with custom machining offsets.
-            </p>
+          <div className="divide-y divide-[#151514]/[0.06] text-xs">
+            {[
+              {
+                feat: 'Throughput (2.4 GB STEP Assembly)',
+                old: '8 to 22 minutes (often locks UI)',
+                neu: '< 3.6 seconds across worker pool',
+              },
+              {
+                feat: 'Multi-Core Utilization',
+                old: '1 Core active (25% on quad-core)',
+                neu: '100% Core saturation via multi-process',
+              },
+              {
+                feat: 'Degenerate B-Rep Surfaces',
+                old: 'Fails with non-manifold error',
+                neu: 'Automatic sewing & normal healing',
+              },
+              {
+                feat: 'Rotated Part Stock Estimation',
+                old: 'World coordinate axis AABB (+60% waste)',
+                neu: 'PCA minimum bounding envelope (-35%)',
+              },
+              {
+                feat: 'Data Privacy / Workstation Security',
+                old: 'Requires cloud upload or license check',
+                neu: '100% on-premises C++ compiled binary',
+              },
+            ].map((row, i) => (
+              <div key={i} className="grid grid-cols-1 md:grid-cols-3 p-4 items-center gap-2">
+                <div className="font-semibold text-[#151514]">{row.feat}</div>
+                <div className="text-[#8C8A85]">{row.old}</div>
+                <div className="font-bold text-[#151514] flex items-center gap-1.5">
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>{row.neu}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Advanced Engineering Showcase */}
+      {/* Swiss Technical Specification Ledger */}
       <section className="px-6 mb-24 max-w-6xl mx-auto">
         <div className="border border-[#151514]/[0.08] rounded-3xl bg-[#F5F3EF] p-8 sm:p-12 shadow-xs">
-          <div className="max-w-2xl mb-8">
+          <div className="max-w-3xl mb-10">
             <span className="text-[11px] font-mono font-semibold tracking-wider text-[#8C8A85] uppercase">
-              HIGH-THROUGHPUT ASSEMBLY PARSING
+              HIGH-THROUGHPUT ASSEMBLY SPECIFICATION
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#151514] mt-2 mb-2">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#151514] mt-2 mb-3">
               Automated STEP Decomposition &amp; Raw Stock Sizing
             </h2>
-            <p className="text-xs sm:text-sm text-[#686663] leading-relaxed">
-              Designed specifically for manufacturing plants receiving complex multi-gigabyte client assemblies in STEP AP203/214/242.
+            <p className="text-sm text-[#686663] leading-relaxed">
+              Designed specifically for manufacturing plants receiving complex multi-gigabyte client assemblies in STEP AP203, AP214, and AP242 standards.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
-              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-blue-600" />
-                <span>MULTI-PROCESS WORKER POOL</span>
+          <div className="border-t border-[#151514]/15 divide-y divide-[#151514]/10 font-mono text-xs">
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>01 // ASYNC WORKER POOL</span>
               </div>
-              <p className="text-xs text-[#686663] leading-relaxed">
-                Utilizes dedicated C++ worker processes to import and isolate bodies in parallel, bypassing single-core bottlenecks.
-              </p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Utilizes dedicated C++ worker processes to import and isolate bodies in parallel, bypassing legacy single-thread CPU bottlenecks during STEP parsing.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                CONCURRENCY: 16+ WORKERS
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
-              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-amber-600" />
-                <span>PCA MINIMUM BOUNDING BOX</span>
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>02 // B-REP TOPOLOGY HEALING</span>
               </div>
-              <p className="text-xs text-[#686663] leading-relaxed">
-                Computes tightest physical billet, block, or round bar stock dimensions for each individual body without excess waste.
-              </p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Repairs inverted face normals, closes non-manifold edge tolerances, and stitches free boundaries into watertight solid bodies ready for CNC cut-list extraction.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-emerald-700 font-bold">
+                TOPOLOGY REPAIR: AUTO
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#EBE9E5]/60 border border-[#151514]/[0.06]">
-              <div className="font-mono text-xs font-bold text-[#151514] mb-2 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>SURFACE HEALING &amp; B-REP STITCH</span>
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>03 // PCA PRINCIPAL AXES SIZING</span>
               </div>
-              <p className="text-xs text-[#686663] leading-relaxed">
-                Automatically repairs degenerate faces, closes non-manifold gaps, and ensures watertight solid bodies for export.
-              </p>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Computes tightest physical billet, block, or round bar stock dimensions for each individual body without excess waste, accommodating user-defined milling margins.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#686663]">
+                AXIAL DOMINANCE: PCA
+              </div>
+            </div>
+
+            <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+              <div className="md:col-span-3 text-[#8C8A85] font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#151514]" />
+                <span>04 // AIR-GAPPED EXCEL EXPORT</span>
+              </div>
+              <div className="md:col-span-6 font-sans text-xs text-[#151514] leading-relaxed">
+                Outputs production Excel workbooks complete with part hierarchy, volumes, surface areas, material assignments, and stock callouts without network transmission.
+              </div>
+              <div className="md:col-span-3 md:text-right font-mono text-[11px] text-[#151514] font-semibold">
+                NETWORK REQUIRED: NONE
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[#151514]/[0.08] py-16 px-6 text-center">
+      {/* CTA Section */}
+      <section className="border-t border-[#151514]/[0.08] py-16 px-6 text-center">
         <h3 className="text-2xl font-bold tracking-tight text-[#151514] mb-3">
           Process your largest STEP models in seconds.
         </h3>
@@ -182,10 +218,9 @@ export const StepBOMPage: React.FC<PageProps> = ({ onBack, onOpenContactModal })
         >
           Contact Our Engineering Team
         </button>
-      </footer>
+      </section>
     </div>
   );
 };
 
 export default StepBOMPage;
-

@@ -51,7 +51,7 @@ export const EngineeringFAQ: React.FC = () => {
           — TECHNICAL FREQUENTLY ASKED QUESTIONS
         </span>
         <h2 className="text-3xl sm:text-5xl font-bold tracking-tightest text-[#151514] mb-3">
-          Engineering <span className="font-serif italic font-normal">Intelligence.</span>
+          Engineering Intelligence &amp; FAQ.
         </h2>
         <p className="text-sm sm:text-base text-[#686663] max-w-lg leading-relaxed">
           Technical specifications, CAD kernel interoperability, and security compliance details.

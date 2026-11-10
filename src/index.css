@@ -74,3 +74,18 @@ html.lenis, html.lenis body {
   -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 80%);
 }
 
+@layer utilities {
+  .rounded-4xl {
+    border-radius: 2rem;
+  }
+  .tracking-tightest {
+    letter-spacing: -0.04em;
+  }
+  .shadow-xs {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  .shadow-2xs {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.03);
+  }
+}
+

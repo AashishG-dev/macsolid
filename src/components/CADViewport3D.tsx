@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 export type CADModelType = 'hero_spindle' | 'mould_assembly' | 'hydraulic_manifold';
@@ -23,7 +23,6 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
   className = '',
 }) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
-  const [coords, setCoords] = useState({ x: 124.5, y: 32.0, z: -48.2 });
 
   // References for Three.js objects
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -617,16 +616,6 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
     };
 
     const onPointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      const relX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const relY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-
-      setCoords({
-        x: parseFloat((relX * 140).toFixed(1)),
-        y: parseFloat((relY * 95).toFixed(1)),
-        z: parseFloat((40 + Math.sin(Date.now() * 0.001) * 25).toFixed(1)),
-      });
-
       if (!isDragging || !interactive) return;
       const deltaX = e.clientX - prevPointerPos.x;
       const deltaY = e.clientY - prevPointerPos.y;
@@ -736,6 +725,20 @@ export const CADViewport3D: React.FC<CADViewport3DProps> = ({
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerUp);
+
+      // Deep GPU resource disposal to eliminate memory leaks
+      partsGroup.traverse((child) => {
+        const mesh = child as THREE.Mesh;
+        if (mesh.geometry) mesh.geometry.dispose();
+        if (mesh.material) {
+          const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+          mats.forEach((m) => m.dispose());
+        }
+      });
+
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
       renderer.dispose();
     };
   }, [modelType]);

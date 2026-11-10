@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CADViewport3D } from './CADViewport3D';
-import { Sliders, RotateCcw, Target, Sparkles, Layers, Box, Eye, FileSpreadsheet } from 'lucide-react';
+import { Sliders, RotateCcw, Target, Layers, Box, Eye, FileSpreadsheet } from 'lucide-react';
 import { LiquidNavbar, LiquidNavItem } from './ui/liquid-glass-navbar';
 
 export const InteractiveCADStudio: React.FC = () => {
@@ -24,7 +24,7 @@ export const InteractiveCADStudio: React.FC = () => {
           — CAD KERNEL STUDIO
         </span>
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tightest text-[#151514] mb-3 sm:mb-4">
-          Interactive <span className="font-serif italic font-normal">Architecture.</span>
+          Interactive Kernel Architecture.
         </h2>
         <p className="text-sm sm:text-base lg:text-lg text-[#686663] font-normal max-w-xl">
           Toggle between assembly states or drag the cutting plane in real time.
